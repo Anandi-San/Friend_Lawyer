@@ -1,0 +1,45 @@
+# POST http://localhost:5000/users
+# Content-Type: application/json
+
+# {
+#     "name": "Hotman",
+#     "email": "Hotman@gmail.com",
+#     "password": "123456",
+#     "confPassword": "123456",
+#     "role": "partners"
+# }
+
+# GET http://localhost:5000/users
+
+# DELETE http://localhost:5000/users/bc49835a-7e07-4541-9744-7125784be908
+
+# POST http://localhost:5000/login
+# Content-Type: application/json
+
+# {
+#     "email": "admin@gmail.com",
+#     "password": "123456"
+# }
+
+# GET http://localhost:5000/me
+
+# DELETE  http://localhost:5000/logout
+
+# POST http://localhost:5000/login
+# Content-Type: application/json
+
+# {
+#     "email": "admin@gmail.com",
+#     "password": "123456"
+# }
+
+# GET http://localhost:5000/discussion
+
+# POST  Data Discussion
+# POST http://localhost:5000/discussion
+# Content-Type: application/json
+
+# {
+#     "title": "RKHUP",
+#     "content": "Undang Undang tentang hukum pidana",
+# }

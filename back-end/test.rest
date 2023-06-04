@@ -1,0 +1,47 @@
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "123456"
+}
+
+###
+DELETE  http://localhost:5000/logout
+
+###
+GET http://localhost:5000/discussion/087675b6-2107-46aa-a353-af20887165e4
+
+###
+GET http://localhost:5000/discussion
+
+
+
+###
+POST http://localhost:5000/discusion
+Content-Type: application/json
+
+{
+    "title": "dpr",
+    "content": "gmna sih anggota dpr"
+}
+
+###
+DELETE  http://localhost:5000/discussion/62e20743-8925-4d6f-b144-a1d10953b196
+
+###
+GET http://localhost:5000/message
+
+###
+GET http://localhost:5000/message/168747e8-2103-4e89-b220-b13c18bea07b
+
+###
+POST http://localhost:5000/message/2
+Content-Type: application/json
+
+{
+    "pesan": "hahaha"
+}
+
+###
+DELETE http://localhost:5000/message/168747e8-2103-4e89-b220-b13c18bea07b
