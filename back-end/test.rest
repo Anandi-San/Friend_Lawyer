@@ -15,8 +15,8 @@ GET http://localhost:5000/discussion/087675b6-2107-46aa-a353-af20887165e4
 ###
 GET http://localhost:5000/discussion
 
-
-
+###
+GET http://localhost:5000/users
 ###
 POST http://localhost:5000/discusion
 Content-Type: application/json
@@ -33,14 +33,18 @@ DELETE  http://localhost:5000/discussion/62e20743-8925-4d6f-b144-a1d10953b196
 GET http://localhost:5000/message
 
 ###
-GET http://localhost:5000/message/168747e8-2103-4e89-b220-b13c18bea07b
+GET http://localhost:5000/message/3b04b049-f56d-429f-9dc1-d7f1b734a9f5
+
 
 ###
-POST http://localhost:5000/message/2
+GET http://localhost:5000/discussionmessage/087675b6-2107-46aa-a353-af20887165e4
+
+###
+POST http://localhost:5000/message/4
 Content-Type: application/json
 
 {
-    "pesan": "hahaha"
+    "pesan": "menurut saya"
 }
 
 ###
