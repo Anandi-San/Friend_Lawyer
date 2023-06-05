@@ -2,6 +2,7 @@ import React from 'react'
 import {NavLink, useNavigate} from "react-router-dom";
 import {IoPerson, IoPricetag, IoLogOut, IoHome} from "react-icons/io5";
 import { AiFillMessage } from "react-icons/ai";
+import {FaUserFriends} from 'react-icons/fa'
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from '../features/authSlice';
 
@@ -47,7 +48,13 @@ const Sidebar = () => {
                   <IoPerson /> Users
                 </NavLink>
               </li>
+              <li>
+                <NavLink to={"/partners"}>
+                  <FaUserFriends /> Mitra
+                </NavLink>
+              </li>
             </ul>
+         
           </div>
         )}
         <p className="menu-label">Settings</p>

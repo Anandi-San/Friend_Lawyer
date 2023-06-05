@@ -1,38 +1,179 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { AiFillMessage } from "react-icons/ai";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import axios from "axios";
 
-const RoomChat = () => {
+function RoomChat() {
+  const [pesan, setPesan] = useState("");
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
+  // const [users, setUsers] = useState([])
+  const [discussion, setDiscussion] = useState([]);
 
-  const handleMessageSubmit = (e) => {
-    e.preventDefault();
-    if (newMessage.trim() !== "") {
+  useEffect(() => {
+    getDiscussions();
+    getMessageByDiscussion();
+  }, []);
+
+  const handleSubmit = async () => {
+    try {
+      const newMessage = {
+      pesan: pesan,
+      // userId: req.userId,
+      discussionId: discussion.discussionId,
+        timestamp: new Date().toLocaleString(),
+      };
+      await axios.post("http://localhost:5000/message", newMessage);
       setMessages([...messages, newMessage]);
-      setNewMessage("");
+      setPesan("");
+    } catch (error) {
+      console.error("Error submitting message:", error);
     }
   };
 
+  const handleChange = (value) => {
+    setPesan(value);
+  };
+
+  const getDiscussions = async () => {
+    const url = window.location.href;
+    const discussionId = url.split("/").pop(); // Mengambil ID diskusi dari URL terakhir
+
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/discussion/${discussionId}`,
+      );
+      const { title, content } = response.data; // Ganti dengan nama kolom yang diinginkan
+      setDiscussion({ title, content, discussionId });
+      // console.log(title, content, discussionId )
+    } catch (error) {
+      console.error("Error fetching discussion:", error);
+    }
+  };
+
+  const getMessageByDiscussion = async () => {
+    const url = window.location.href;
+    const discussionId = url.split("/").pop(); // Mengambil ID diskusi dari URL terakhir
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/discussionmessage/${discussionId}`,
+      );
+      setMessages(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
+
+  const dateFormatter = (dateString) => {
+    const date = new Date(dateString);
+
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      timeZone: "UTC",
+    };
+
+    const formattedDate = new Intl.DateTimeFormat("id-ID", options).format(
+      date,
+    );
+    return formattedDate;
+  };
+
   return (
-    <div>
-      <h1>Room Chat</h1>
-      <div className="messages">
-        {messages.map((message, index) => (
-          <div key={index} className="message">
-            {message}
+    <div className="container mt-3">
+      <p style={{ textAlign: "center", fontSize: "24px" }}>
+        {discussion.title}
+      </p>
+      <div className="box">
+        <p style={{ textAlign: "justify" }}>{discussion.content}</p>
+        <p className="mt-3">
+        <span className="is-flex is-align-items-center">
+          <AiFillMessage className="is-size-4 mr-2" />
+          <span className="is-size-5">{messages[0]?.messages?.length}</span>
+          <span className="is-size-5 ml-1">Jawaban</span>
+        </span>
+        </p>
+      </div>
+      <div className="rounded-textarea">
+        <ReactQuill
+          className="is-rounded"
+          value={pesan}
+          onChange={handleChange}
+          formats={["bold", "italic", "underline", "link", "list", "bullet"]}
+        />
+      </div>
+      <div className="button-container">
+        <button
+          className="button is-info is-pulled-right mt-3 is-rounded is-medium"
+          type="submit"
+          onClick={handleSubmit}>
+          Kirim
+        </button>
+        <hr className="is-underlined" />
+      </div>
+
+      {/* isi dengan jawaban message dan aturan pesan ya */}
+      <div className="answer-box">
+        {messages[0]?.messages?.map((message, index) => (
+          <div key={index} className="answer box">
+            <div className="answer-user">{message.user.name}</div>
+            <div
+              className="answer-message"
+              dangerouslySetInnerHTML={{
+                __html: message.pesan,
+              }}></div>
+            <div className="answer-timestamp">
+              {dateFormatter(message.updatedAt)}
+            </div>
           </div>
         ))}
       </div>
-      <form onSubmit={handleMessageSubmit}>
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type your message..."
-        />
-        <button type="submit">Send</button>
-      </form>
+
+      <style>{`
+        .rounded-textarea .ql-editor {
+          min-height: 100px;
+          border-radius: 10px;
+        }
+
+        .is-underlined {
+          border-top: 1px solid #000000;
+          width: 100%;
+          margin-top: 10px;
+        }
+
+        .button-container {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+        }
+
+        .answer-box {
+          margin-top: 20px;
+        }
+
+        .answer {
+          margin-bottom: 10px;
+        }
+
+        .answer-user {
+          font-weight: bold;
+        }
+
+        .answer-message {
+          margin-bottom: 5px;
+        }
+
+        .answer-timestamp {
+          color: #888888;
+          font-size: 12px;
+        }
+      `}</style>
     </div>
   );
-};
+}
 
 export default RoomChat;
