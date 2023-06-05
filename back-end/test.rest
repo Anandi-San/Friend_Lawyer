@@ -40,11 +40,11 @@ GET http://localhost:5000/message/3b04b049-f56d-429f-9dc1-d7f1b734a9f5
 GET http://localhost:5000/discussionmessage/087675b6-2107-46aa-a353-af20887165e4
 
 ###
-POST http://localhost:5000/message/4
+POST http://localhost:5000/message/087675b6-2107-46aa-a353-af20887165e4
 Content-Type: application/json
 
 {
-    "pesan": "menurut saya"
+    "pesan": "hamma deng"
 }
 
 ###
