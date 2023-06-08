@@ -14,6 +14,7 @@ import KonsultasiLangsung from "./pages/DirectConsultationPage/DirectConsultatio
 import RoomChat from "./pages/RoomChatPages";
 import ProfileLawyerPages from "./pages/ProfileLawyerPages";
 import MessagesList from "./pages/MessageListPages";
+import FormBookingLawyer from "./pages/formBookingLawyer/formBookingLawyer"
 
 
 
@@ -37,6 +38,7 @@ function App() {
         <Route path="/discussion/:id" element={<RoomChat/>}/>
         <Route path="/users/:id" element={<ProfileLawyerPages/>}/>
         <Route path="/message" element={<MessagesList/>}/>
+        <Route path="/booking" element={<FormBookingLawyer/>}/>
 
         {/* <Route path="/Room" element={</>}/> */}
         {/* <Route path="/:discussionId" element={<RoomChat/>}/> */}

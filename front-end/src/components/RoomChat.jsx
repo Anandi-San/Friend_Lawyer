@@ -7,24 +7,28 @@ import axios from "axios";
 function RoomChat() {
   const [pesan, setPesan] = useState("");
   const [messages, setMessages] = useState([]);
-  // const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([])
   const [discussion, setDiscussion] = useState([]);
 
   useEffect(() => {
     getDiscussions();
     getMessageByDiscussion();
+    getUsers();
+    startPolling();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = async () => {
+    const url = window.location.href;
+    const discussionId = url.split("/").pop();
     try {
       const newMessage = {
       pesan: pesan,
-      // userId: req.userId,
-      discussionId: discussion.discussionId,
-        timestamp: new Date().toLocaleString(),
+      userId: users.userId,
+      discussionId: discussionId,
       };
-      await axios.post("http://localhost:5000/message", newMessage);
-      setMessages([...messages, newMessage]);
+      await axios.post(`http://localhost:5000/message/${discussionId}`, newMessage);
+      setMessages([...messages,newMessage]);
       setPesan("");
     } catch (error) {
       console.error("Error submitting message:", error);
@@ -33,6 +37,13 @@ function RoomChat() {
 
   const handleChange = (value) => {
     setPesan(value);
+  };
+
+  const getUsers = async () => {
+    const response = await axios.get("http://localhost:5000/users");
+    const User = response.data;
+    // console.log(User)
+    setUsers(User);
   };
 
   const getDiscussions = async () => {
@@ -59,10 +70,20 @@ function RoomChat() {
         `http://localhost:5000/discussionmessage/${discussionId}`,
       );
       setMessages(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
+  };
+
+  const startPolling = () => {
+    const interval = setInterval(() => {
+      getMessageByDiscussion();
+    }, 5000); // Mengambil data pesan setiap 5 detik (atur sesuai kebutuhan Anda)
+
+    return () => {
+      clearInterval(interval);
+    };
   };
 
   const dateFormatter = (dateString) => {
@@ -74,7 +95,7 @@ function RoomChat() {
       day: "numeric",
       hour: "numeric",
       minute: "numeric",
-      timeZone: "UTC",
+      timeZone: "Asia/Makassar",
     };
 
     const formattedDate = new Intl.DateTimeFormat("id-ID", options).format(
