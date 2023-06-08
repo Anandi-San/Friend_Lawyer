@@ -1,3 +1,8 @@
+@import 'bulma';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .kiri {
     background-color: #EBC08D;
   }
