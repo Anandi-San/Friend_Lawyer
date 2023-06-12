@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import img from "../img/foto.svg";
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../style/index.css'
 
 const ProfileLawyer = () => {
   const [user, setUser] = useState(null);
   const { id } = useParams();
-  const history = useHistory();
 
   useEffect(() => {
     const getPartner = async () => {
@@ -24,7 +23,7 @@ const ProfileLawyer = () => {
   }, [id]);
 
   const handleBooking = () => {
-    history.push('/booking');
+    window.location.href = `/booking/${id}`;
   };
   
 

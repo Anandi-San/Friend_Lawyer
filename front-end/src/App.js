@@ -40,7 +40,7 @@ function App() {
         <Route path="/discussion/:id" element={<RoomChat/>}/>
         <Route path="/users/:id" element={<ProfileLawyerPages/>}/>
         <Route path="/message" element={<MessagesList/>}/>
-        <Route path="/booking" element={<FormBookingLawyer/>}/>
+        <Route path="/booking/:userId" element={<FormBookingLawyer/>}/>
         <Route path="/partners" element={<PartnerListPages/>}/>
         <Route path="/form" element={<ListKonsultasi/>}/>
 

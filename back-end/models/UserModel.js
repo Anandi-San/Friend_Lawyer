@@ -1,81 +1,85 @@
 import { Sequelize } from "sequelize";
 import db from "../config/database.js";
 
-const {DataTypes} = Sequelize;
+const { DataTypes } = Sequelize;
 
-const Users = db.define('users',{
-    uuid:{
-        type: DataTypes.STRING,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        validate:{
-            notEmpty: true
-        }
+const Users = db.define(
+  "users",
+  {
+    uuid: {
+      type: DataTypes.STRING,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
-    name:{
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate:{
-            notEmpty: true,
-            len: [3, 100]
-        }
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: [3, 100],
+      },
     },
-    email:{
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate:{
-            notEmpty: true,
-            isEmail: true
-        }
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        isEmail: true,
+      },
     },
-    password:{
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate:{
-            notEmpty: true
-        }
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
-    role:{
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate:{
-            notEmpty: true
-        }
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
-    specialization:{
-        type: DataTypes.TEXT,
-        allowNull: true,
-        validate:{
-            notEmpty: false,
-            len: [3, 100]
-        }
+    specialization: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      validate: {
+        notEmpty: false,
+        len: [3, 100],
+      },
     },
-    experience:{
-        type: DataTypes.TEXT,
-        allowNull: true,
-        validate:{
-            notEmpty: false,
-            len: [3, 100]
-        }
+    experience: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      validate: {
+        notEmpty: false,
+        len: [3, 100],
+      },
     },
-    education:{
-        type: DataTypes.TEXT,
-        allowNull: true,
-        validate:{
-            notEmpty: false,
-            len: [3, 100]
-        }
+    education: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      validate: {
+        notEmpty: false,
+        len: [3, 100],
+      },
     },
-    license:{
-        type: DataTypes.TEXT,
-        allowNull: true,
-        validate:{
-            notEmpty: false,
-            len: [3, 100]
-        }
+    license: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      validate: {
+        notEmpty: false,
+        len: [3, 100],
+      },
     },
-},{
-    freezeTableName: true
-});
+  },
+  {
+    freezeTableName: true,
+  }
+);
 
 export default Users;

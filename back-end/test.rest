@@ -55,19 +55,17 @@ DELETE http://localhost:5000/message/168747e8-2103-4e89-b220-b13c18bea07b
 GET http://localhost:5000/form
 
 ###
-POST http://localhost:5000/form
+POST http://localhost:5000/booking/cfa607df-c897-45d9-a824-a844fb11d52a
 Content-Type: application/json
 
 {
-    "full_name": "Istaqom",
-    "email": "IIstaqom@gmail.com",
+    "full_name": "Agung",
+    "email": "Agung@gmail.com",
     "phonenumber": "081256810745",
     "day": "senin",
+    "clientid" : 1,
     "hours": "10:00 - 11:00",
-    "problem": "sangat ketergantungan dengan judi",
-    "clientid": 3,
-    "lawyerid": 6
-
+    "problem": "sangat ketergantungan dengan Front-end"
 }
 
 ###

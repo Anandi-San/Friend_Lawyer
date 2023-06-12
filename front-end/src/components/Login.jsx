@@ -14,6 +14,7 @@ const Login = () => {
 
       useEffect(()=>{
         if(user || isSuccess){
+          localStorage.setItem('user', JSON.stringify(user))
           navigate("/homepage");
         }
         dispatch(reset());
@@ -23,7 +24,6 @@ const Login = () => {
         e.preventDefault();
         dispatch(LoginUser({email, password}));
       };
-
   return (
     <section className="hero has-background-grey-light is-fullheight is-fullwidth">
       <div className="hero-body">

@@ -13,7 +13,7 @@ const Userlist = () => {
     const getPartners = async () => {
         const response = await axios.get("http://localhost:5000/partners");
         setUsers(response.data);
-        console.log(response.data)
+        // console.log(response.data)
     };
 
     const deleteUser = async (userId) => {

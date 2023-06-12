@@ -63,7 +63,8 @@ const formconsultant = db.define(
     },
     status: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true,
+      defaultValue: ""
     },
     clientid: {
       type: DataTypes.INTEGER, // Updated data type to DataTypes.UUID

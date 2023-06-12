@@ -5,7 +5,6 @@ import banner1 from "../img/banner1.jpg"
 import { Link } from "react-router-dom";
 
 
-
 const Home = () => {
     return (
       <div>
