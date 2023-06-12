@@ -7,14 +7,13 @@ const KonsultasiLangsung = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    getUsers();
+    getPartners();
   }, []);
 
-  const getUsers = async () => {
-    const response = await axios.get("http://localhost:5000/users");
-    const mitraLawyerUsers = response.data.filter(user => user.role === 'Lawyer');
-    setUsers(mitraLawyerUsers);
-  };
+  const getPartners = async () => {
+    const response = await axios.get("http://localhost:5000/partners");
+    setUsers(response.data);
+};
 
   return (
     <div className="container landing-page">
@@ -33,11 +32,15 @@ const KonsultasiLangsung = () => {
                   <Link to={`/users/${user.uuid}`}>
                     <h4 className="title is-4">{user.name}</h4>
                   </Link>
-                  <ul>
-                    <li>Kasus Penistaan Agama</li>
-                    <li>Kasus Merendahkan Perumpuan</li>
-                    <li>Kasus Mogok Kerja</li>
-                  </ul>
+                  <h4 className='text-gray-500 mt-4'>Kasus Kasus yang ditangani</h4>
+                  <div>
+                    {user.specialization && user.specialization.slice(1).map((specialization, index) => (
+                      <React.Fragment key={index}>
+                        {specialization.role_name}
+                        {index !== user.specialization.length - 2 && <br />}
+                      </React.Fragment>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

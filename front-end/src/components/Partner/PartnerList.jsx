@@ -7,31 +7,34 @@ const Userlist = () => {
 
 
     useEffect(()=>{
-        getUsers();
+        getPartners();
     },[]);
 
-    const getUsers = async () => {
-        const response = await axios.get("http://localhost:5000/users");
+    const getPartners = async () => {
+        const response = await axios.get("http://localhost:5000/partners");
         setUsers(response.data);
         console.log(response.data)
     };
 
     const deleteUser = async (userId) => {
         await axios.delete(`http://localhost:5000/users/${userId}`);
-        getUsers();
+        getPartners();
     };
   return (
     <div>
-        <h1 className='title'>Users</h1>
-     <h2 className='subtitle'> List of Users</h2>
-    <Link to="/users/add" className='button is-primary mb-2'>Add new</Link>
+        <h1 className='title'>Partner</h1>
+     <h2 className='subtitle'> List of Partners</h2>
+    <Link to="/partners/add" className='button is-primary mb-2'>Add new</Link>
      <table className='table is-striped is-fullwidth'>
         <thead>
             <tr>
                 <th>No</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Role</th>
+                <th>specialization</th>
+                <th>experience</th>
+                <th>education</th>
+                <th>license</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -41,7 +44,19 @@ const Userlist = () => {
                 <td>{index + 1}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{user.role}</td>
+                <td>
+                    {user.specialization.slice(1).map((specialization, index) => (
+                        <React.Fragment key={index}>
+                        {specialization.role_name}
+                        {index !== user.specialization.length - 1 && <br />}
+                        </React.Fragment>
+                    ))}
+                </td>
+                <td>
+                {user.experience}
+                </td>
+                <td>{user.education}</td>
+                <td>{user.license}</td>
                 <td>
                 <Link
                   to={`/users/edit/${user.uuid}`}

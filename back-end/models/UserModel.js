@@ -41,7 +41,39 @@ const Users = db.define('users',{
         validate:{
             notEmpty: true
         }
-    }
+    },
+    specialization:{
+        type: DataTypes.TEXT,
+        allowNull: true,
+        validate:{
+            notEmpty: false,
+            len: [3, 100]
+        }
+    },
+    experience:{
+        type: DataTypes.TEXT,
+        allowNull: true,
+        validate:{
+            notEmpty: false,
+            len: [3, 100]
+        }
+    },
+    education:{
+        type: DataTypes.TEXT,
+        allowNull: true,
+        validate:{
+            notEmpty: false,
+            len: [3, 100]
+        }
+    },
+    license:{
+        type: DataTypes.TEXT,
+        allowNull: true,
+        validate:{
+            notEmpty: false,
+            len: [3, 100]
+        }
+    },
 },{
     freezeTableName: true
 });

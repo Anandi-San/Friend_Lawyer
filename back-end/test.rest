@@ -49,3 +49,26 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:5000/message/168747e8-2103-4e89-b220-b13c18bea07b
+
+# bagian form
+###
+GET http://localhost:5000/form
+
+###
+POST http://localhost:5000/form
+Content-Type: application/json
+
+{
+    "full_name": "Istaqom",
+    "email": "IIstaqom@gmail.com",
+    "phonenumber": "081256810745",
+    "day": "senin",
+    "hours": "10:00 - 11:00",
+    "problem": "sangat ketergantungan dengan judi",
+    "clientid": 3,
+    "lawyerid": 6
+
+}
+
+###
+GET http://localhost:5000/form/cc3d98eb-d3dc-4f79-8039-b0e040070451

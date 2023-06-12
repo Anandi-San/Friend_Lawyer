@@ -1,7 +1,7 @@
 import React from 'react'
 import {NavLink, useNavigate} from "react-router-dom";
 import {IoPerson, IoPricetag, IoLogOut, IoHome} from "react-icons/io5";
-import { AiFillMessage } from "react-icons/ai";
+import { AiFillMessage, AiOutlineForm, AiOutlineCheck } from "react-icons/ai";
 import {FaUserFriends} from 'react-icons/fa'
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from '../features/authSlice';
@@ -36,6 +36,16 @@ const Sidebar = () => {
           <li>
           <NavLink to={"/message"}>
               <AiFillMessage /> Message
+            </NavLink>
+          </li>
+          <li>
+          <NavLink to={"/form"}>
+              <AiOutlineForm /> ListConsul
+            </NavLink>
+          </li>
+          <li>
+          <NavLink to={"/form"}>
+              <AiOutlineCheck /> Accepted
             </NavLink>
           </li>
         </ul>

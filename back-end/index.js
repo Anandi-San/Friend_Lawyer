@@ -7,7 +7,9 @@ import db from "./config/database.js";
 import UsersRoute from "./routes/UsersRoute.js";
 import DiscussionRoute from "./routes/DiscussionRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
-import MessageRoute from "./routes/MessageRoute.js"
+import MessageRoute from "./routes/MessageRoute.js";
+import PartnersRoute from "./routes/PartnersRoute.js";
+import KonsulFormRoute from "./routes/KonsulFormRoute.js"
 
 dotenv.config();
 
@@ -52,6 +54,8 @@ app.use(UsersRoute);
 app.use(DiscussionRoute);
 app.use(AuthRoute);
 app.use(MessageRoute);
+app.use(PartnersRoute);
+app.use(KonsulFormRoute)
 
 // store.sync();
 // console.log(user);

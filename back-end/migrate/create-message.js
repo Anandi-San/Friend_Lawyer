@@ -1,7 +1,7 @@
-import Message from "../models/MessageModel.js";
+import Notifcation from "../models/NotifcationModel.js";
 
 // Metode sync akan membuat tabel dalam database jika belum ada
-Message.sync({ force: true }) // force: true akan menghapus tabel yang sudah ada dan membuat yang baru
+Notifcation.sync()// force: true akan menghapus tabel yang sudah ada dan membuat yang baru
   .then(() => {
     console.log("Tabel berhasil dibuat");
   })
