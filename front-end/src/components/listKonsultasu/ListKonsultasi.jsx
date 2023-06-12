@@ -25,16 +25,13 @@ const deleteforms = async (formculstantId) => {
 };
 
 const acceptForm = async (formconsultantId) => {
-    await axios.post("http://localhost:5000/notification", { formId: formconsultantId, status: "accepted" });
-    // Perbarui state acceptedForms dengan formconsultantId yang diterima
-    setAccepted([...acceptForm, formconsultantId]);
+    await axios.patch(`http://localhost:5000/form/${formconsultantId}`, { status: "accepted" });
+    setAccepted([...accepted, formconsultantId]);
   };
 
   const rejectForm = async (formconsultantId) => {
-    // Kirim permintaan POST untuk menambahkan notifikasi pengguna yang ditolak
-    await axios.post("http://localhost:5000/notification", { formId: formconsultantId, status: "rejected" });
-    // Perbarui state rejectedForms dengan formconsultantId yang ditolak
-    setRejected([...rejectForm, formconsultantId]);
+    await axios.patch(`http://localhost:5000/form/${formconsultantId}`, { status: "rejected" });
+    setRejected([...rejected, formconsultantId]);
   };
   
   
@@ -67,16 +64,14 @@ const acceptForm = async (formconsultantId) => {
                       <td>{formconsultant.hours}</td>
                       <td>{formconsultant.problem}</td>
                       <td>
-                      <button
+                        <button
                             className={`button is-small is-info ${accepted.includes(formconsultant.uuid) ? 'disabled' : ''}`}
-                            onClick={() => acceptForm(formconsultant.uuid)}>Accepted
-                    </button>
-                    <button
-                        className={`button is-small is-danger ${rejected.includes(formconsultant.uuid) ? 'disabled' : ''}`}
-                        onClick={() => rejectForm(formconsultant.uuid)}
-                        >
-                        Reject
+                            onClick={() => acceptForm(formconsultant.uuid)}>Accept
                         </button>
+                        <button
+                            className={`button is-small is-danger ${rejected.includes(formconsultant.uuid) ? 'disabled' : ''}`}
+                            onClick={() => rejectForm(formconsultant.uuid)}>Reject
+                            </button>
                         <button onClick={() => deleteforms(formconsultant.uuid)} className='button is-small is-danger' >Delete</button>
                       </td>
                   </tr>

@@ -13,6 +13,7 @@ export const getKonsulForm = async (req, res) => {
         "day",
         "hours",
         "problem",
+        "status",
         "clientid",
         "lawyerid",
       ],
@@ -117,6 +118,7 @@ export const createKonsulForm = async (req, res) => {
   }
 };
 
+
 export const updateKonsulForm = async (req, res) => {
   try {
     const formconsultant = await FormConsultant.findOne({
@@ -125,7 +127,8 @@ export const updateKonsulForm = async (req, res) => {
       },
     });
     if (!formconsultant)
-      return res.status(404).json({ msg: "Data tidak ditemukan" });
+      return res.status(404).json({ msg: "Data not found" });
+
     const {
       full_name,
       email,
@@ -135,28 +138,10 @@ export const updateKonsulForm = async (req, res) => {
       problem,
       clientid,
       lawyerid,
+      status,
     } = req.body;
+
     if (req.role === "admin") {
-      await Discussion.update(
-        {
-          full_name,
-          email,
-          phonenumber,
-          day,
-          hours,
-          problem,
-          clientid,
-          lawyerid,
-        },
-        {
-          where: {
-            id: formconsultant.id,
-          },
-        }
-      );
-    } else {
-      if (req.userId !== formconsultant.userId)
-        return res.status(403).json({ msg: "Akses terlarang" });
       await FormConsultant.update(
         {
           full_name,
@@ -167,46 +152,45 @@ export const updateKonsulForm = async (req, res) => {
           problem,
           clientid,
           lawyerid,
+          status,
         },
         {
           where: {
-            [Op.and]: [{ id: formconsultant.id }, { userId: req.userId }],
+            uuid: req.params.id,
+          },
+        }
+      );
+    } else {
+      if (req.userId !== formconsultant.lawyerid)
+        return res.status(403).json({ msg: "Unauthorized access" });
+
+      await FormConsultant.update(
+        {
+          full_name,
+          email,
+          phonenumber,
+          day,
+          hours,
+          problem,
+          clientid,
+          lawyerid,
+          status,
+        },
+        {
+          where: {
+            uuid: req.params.id,
+            lawyerid: req.userId,
           },
         }
       );
     }
-    res.status(200).json({ msg: "Product updated successfuly" });
+
+    res.status(200).json({ msg: "Form updated successfully" });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
 };
 
-// export const getFormBylawyerId = async (req, res) => {
-//   const { userId } = req.params;
-
-//   try {
-//     if (req.role !== 'admin' && req.userId !== userId) {
-//       return res.status(403).json({ msg: 'Akses terlarang' });
-//     }
-
-//     const forms = await FormConsultant.findAll({
-//       where: {
-//         lawyerid: userId,
-//       },
-//       include: [
-//         {
-//           model: Users,
-//           as: 'client',
-//           attributes: ['name'],
-//         },
-//       ],
-//     });
-
-//     res.status(200).json(forms);
-//   } catch (error) {
-//     res.status(500).json({ msg: error.message });
-//   }
-// };
 
 export const deleteKonsulForm = async (req, res) => {
   try {

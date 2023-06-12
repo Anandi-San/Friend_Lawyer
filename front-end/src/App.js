@@ -17,6 +17,7 @@ import MessagesList from "./pages/MessageListPages";
 import FormBookingLawyer from "./pages/formBookingLawyer/formBookingLawyer";
 import PartnerListPages from "./pages/Partner/PartnerListPages";
 import ListKonsultasi from './pages/ListKonsultasi/ListKonsultasiPages'
+import AcceptedConsultant from './pages/ListKonsultasi/AcceptedPages'
 
 
 
@@ -43,6 +44,7 @@ function App() {
         <Route path="/booking/:userId" element={<FormBookingLawyer/>}/>
         <Route path="/partners" element={<PartnerListPages/>}/>
         <Route path="/form" element={<ListKonsultasi/>}/>
+        <Route path="/formaccepted" element={<AcceptedConsultant/>}/>
 
         
 

@@ -44,7 +44,7 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-          <NavLink to={"/form"}>
+          <NavLink to={"/formaccepted"}>
               <AiOutlineCheck /> Accepted
             </NavLink>
           </li>

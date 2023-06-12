@@ -25,10 +25,6 @@ function Form() {
     }
     getPartners();
   }, []);
-  // aku ngapain bang, apakah saya boleh pulang bang
-  // gila gila
-  // makasih banyak bang dapa
-  // lanjut bang aku mau deploy bangkit dulu sudah selesai itu, tnggal konek2 id2. shearusnya
   
   const saveForm = async (e) => {
     e.preventDefault()
