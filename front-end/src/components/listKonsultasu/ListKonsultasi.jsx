@@ -7,16 +7,18 @@ const [forms, setForms] = useState([]);
 const [accepted, setAccepted] = useState([]);
 const [rejected, setRejected] = useState([]);
 
-
-
 useEffect(()=>{
     getforms();
 },[]);
 
 const getforms = async () => {
-    const response = await axios.get("http://localhost:5000/form");
-    setForms(response.data);
-    console.log(response.data)
+    if (JSON.parse(localStorage.getItem('user')).role === "admin") {
+        const response = await axios.get(`http://localhost:5000/form`);
+        setForms(response.data);
+    } else {
+        const response = await axios.get(`http://localhost:5000/form/${JSON.parse(localStorage.getItem('user')).uuid}`);
+        setForms(response.data);
+    }
 };
 
 const deleteforms = async (formculstantId) => {

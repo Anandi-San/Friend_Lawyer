@@ -20,7 +20,7 @@ function Mymessage() {
   return (
     <div>
         <h1 className='title'>consultation</h1>
-        <h2 className='subtitle'>List of consultationt</h2>
+        <h2 className='subtitle'>Daftar Permintaan Konsultasi Anda</h2>
             <table className='table is-striped is-fullwidth'>
                 <thead>
                     <tr>
