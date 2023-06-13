@@ -1,4 +1,4 @@
-import { Op } from "sequelize";
+// import { Op } from "sequelize";
 import FormConsultant from "../models/FormColsultant.js";
 import Users from "../models/UserModel.js";
 
@@ -36,19 +36,63 @@ export const getKonsulForm = async (req, res) => {
   }
 };
 
-export const getKonsulFormById = async (req, res) => {
+export const getnotifByUserId = async (req, res) => {
+  const { userId } = req.params;
+  console.log(userId);
+
   try {
-    const formconsultant = await FormConsultant.findOne({
-      where: {
-        uuid: req.params.id,
-      },
+    const response = await FormConsultant.findAll({
+      attributes: ["uuid", "day", "hours", "problem", "status", "lawyerid"],
+      include: [
+        {
+          model: Users,
+          as: "client", // Menggunakan "client" sebagai alias untuk asosiasi client
+          attributes: ["name"],
+          where: { uuid: userId }, // Menambahkan kondisi where untuk mencocokkan dengan UUID client
+        },
+        {
+          model: Users,
+          as: "lawyer",
+          attributes: ["name"],
+        },
+      ],
     });
 
-    if (!formconsultant) {
-      return res.status(404).json({ msg: "Data tidak ditemukan" });
-    }
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
 
-    const response = await FormConsultant.findOne({
+//   try {
+//     const response = await FormConsultant.findAll({
+//       attributes: [
+//         "uuid",
+//         "day",
+//         "hours",
+//         "problem",
+//         "status",
+//         "lawyerid",
+//       ],
+//       include: [
+//         {
+//           model: Users,
+//           as: "lawyer",
+//           attributes: ["name"],
+//         },
+//       ],
+//     });
+//     res.status(200).json(response);
+//   } catch (error) {
+//     res.status(500).json({ msg: error.message });
+//   }
+// };
+
+export const getKonsulFormById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const response = await FormConsultant.findAll({
       attributes: [
         "uuid",
         "full_name",
@@ -57,21 +101,26 @@ export const getKonsulFormById = async (req, res) => {
         "day",
         "hours",
         "problem",
+        "status",
         "clientid",
         "lawyerid",
       ],
-      where: {
-        uuid: req.params.id,
-      },
       include: [
         {
           model: Users,
           as: "client",
-          attributes: ["name", "email"],
+          attributes: ["name"],
+        },
+        {
+          model: Users,
+          as: "lawyer",
+          attributes: ["id", "name", "uuid"],
         },
       ],
+      where: {
+        '$lawyer.uuid$': id,
+      },
     });
-
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ msg: error.message });
@@ -118,7 +167,6 @@ export const createKonsulForm = async (req, res) => {
   }
 };
 
-
 export const updateKonsulForm = async (req, res) => {
   try {
     const formconsultant = await FormConsultant.findOne({
@@ -126,8 +174,7 @@ export const updateKonsulForm = async (req, res) => {
         uuid: req.params.id,
       },
     });
-    if (!formconsultant)
-      return res.status(404).json({ msg: "Data not found" });
+    if (!formconsultant) return res.status(404).json({ msg: "Data not found" });
 
     const {
       full_name,
@@ -190,7 +237,6 @@ export const updateKonsulForm = async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 };
-
 
 export const deleteKonsulForm = async (req, res) => {
   try {
