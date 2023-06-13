@@ -31,7 +31,7 @@ function Form() {
     // const url = window.location.href;
     // const userId = url.split("/").pop();
     // console.log(userId)
-    const postUrl = `http://localhost:5000/booking/${userId}`; // user id cari tuh, ambil dari sessionnya kan bearti
+    const postUrl = `http://localhost:5000/booking/${userId}`;
 
     const requestBody = {
       full_name: fullName,

@@ -41,7 +41,7 @@ function Accepted() {
                 </thead>
                 <tbody>
                     {forms.map((formconsultant, index) => {
-                        if (formconsultant.status === 'accepted') {
+                        if (formconsultant.status === 'accepted' || formconsultant.status === 'rejected') {
                             return (
                                 <tr key={formconsultant.uuid}>
                                     <td>{index + 1}</td>

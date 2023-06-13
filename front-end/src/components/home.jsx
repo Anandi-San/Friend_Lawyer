@@ -1,11 +1,30 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import service1 from "../img/service1.png";
 import step2 from "../img/step2.png"
 import banner1 from "../img/banner1.jpg"
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import {AiFillMessage} from "react-icons/ai";
+import axios from "axios";
+// import { useParams } from "react-router-dom";
 
 
 const Home = () => {
+  const [user, setUsers] = useState([]);
+
+  const saved = JSON.parse(localStorage.getItem("user"));
+  const id = saved.uuid;
+
+  useEffect(()=>{
+      getUserById();
+  },[]);
+  
+  const getUserById = async () => {
+      const response = await axios.get(`http://localhost:5000/users/${id}`);
+      // setUsers(response.data);
+      // console.log(response.data)
+  };
+
+  
     return (
       <div>
           <style>
@@ -27,6 +46,9 @@ const Home = () => {
         `}
       </style>
       <header className="hero is-primary">
+      <Link to={`/notif/${id}`}>
+        <AiFillMessage size={24} />
+      </Link>
       <div className="hero-body">
       <div className="container">
       <div className="header-content">

@@ -7,6 +7,7 @@ import '../style/index.css'
 const ProfileLawyer = () => {
   const [user, setUser] = useState(null);
   const { id } = useParams();
+  console.log(id)
 
   useEffect(() => {
     const getPartner = async () => {

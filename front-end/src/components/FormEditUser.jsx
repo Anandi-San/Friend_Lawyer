@@ -12,6 +12,7 @@ const FormEditUser = () => {
     const [msg, setMsg] = useState("");
     const navigate = useNavigate();
     const { id } = useParams();
+    // console.log(id)
 
     useEffect(()=> {
         const getUserById = async () => {
