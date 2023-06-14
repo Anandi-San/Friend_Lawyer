@@ -21,10 +21,15 @@ const getforms = async () => {
     }
 };
 
-const deleteforms = async (formculstantId) => {
-    await axios.delete(`http://localhost:5000/form/${formculstantId}`);
-    getforms();
-};
+const deleteforms = async (formconsultantId) => {
+    const userRole = JSON.parse(localStorage.getItem('user')).role;
+    if (userRole === 'admin' || userRole === 'Lawyer') {
+      await axios.delete(`http://localhost:5000/form/${formconsultantId}`);
+      getforms();
+    } else {
+    }
+  };
+
 
 const acceptForm = async (formconsultantId) => {
     await axios.patch(`http://localhost:5000/form/${formconsultantId}`, { status: "accepted" });
@@ -74,7 +79,7 @@ const acceptForm = async (formconsultantId) => {
                             className={`button is-small is-danger ${rejected.includes(formconsultant.uuid) ? 'disabled' : ''}`}
                             onClick={() => rejectForm(formconsultant.uuid)}>Reject
                             </button>
-                        <button onClick={() => deleteforms(formconsultant.uuid)} className='button is-small is-danger' >Delete</button>
+                        <button onClick={() => deleteforms(formconsultant.uuid)} className='button is-small is-danger'>Delete</button>
                       </td>
                   </tr>
                 ))}

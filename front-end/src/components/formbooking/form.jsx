@@ -5,6 +5,7 @@ import logo from "../../img/Logo.png";
 import "../../style/index.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Swal from 'sweetalert2';
 
 function Form() {
   const { userId } = useParams()
@@ -16,7 +17,7 @@ function Form() {
   const [hours, setHours] = useState();
   const [problem, setProblem] = useState();
   const [id,setId] = useState()
-  console.log(id)
+  // console.log(id)
 
   useEffect(() => {
     const dataUser = JSON.parse(localStorage.getItem('user'))
@@ -25,6 +26,16 @@ function Form() {
     }
     getPartners();
   }, []);
+
+  const resetForm = () => {
+    setFullName('');
+    setEmail('');
+    setPhoneNumber('');
+    setDay('');
+    setHours('');
+    setProblem('');
+  };
+
   
   const saveForm = async (e) => {
     e.preventDefault()
@@ -48,8 +59,23 @@ function Form() {
     try {
       const response = await axios.post(postUrl, requestBody);
       console.log("Form saved successfully:", response.data);
+      Swal.fire({
+        title: 'Success!',
+        text: 'Permintaan anda telah diterima',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        resetForm();
+        window.location.reload();
+      });
     } catch (error) {
       console.error("Error saving form:", error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Error saving form: ' + error.message,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   };
 
