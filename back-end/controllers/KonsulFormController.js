@@ -245,25 +245,27 @@ export const deleteKonsulForm = async (req, res) => {
         uuid: req.params.id,
       },
     });
+
     if (!formconsultant)
       return res.status(404).json({ msg: "Data tidak ditemukan" });
-    if (req.role === "admin") {
+
+    if (req.role === "admin" || req.role === "Lawyer") {
+      // Periksa jika pengguna memiliki izin untuk menghapus data
+      if (req.role === "lawyer" && req.userId !== formconsultant.userId)
+        return res.status(403).json({ msg: "Akses terlarang" });
+
       await FormConsultant.destroy({
         where: {
           id: formconsultant.id,
         },
       });
+
+      res.status(200).json({ msg: "Data berhasil dihapus" });
     } else {
-      if (req.userId !== formconsultant.userId)
-        return res.status(403).json({ msg: "Akses terlarang" });
-      await Discussion.destroy({
-        where: {
-          [Op.and]: [{ id: formconsultant.id }, { userId: req.userId }],
-        },
-      });
+      return res.status(403).json({ msg: "Akses terlarang" });
     }
-    res.status(200).json({ msg: "Product deleted successfuly" });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
 };
+
