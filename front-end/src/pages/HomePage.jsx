@@ -1,5 +1,7 @@
 import React from "react";
 import Home from "../components/home";
+import Layout from "../pages/GlobalLayout"
+
 // import Layout from './Layout'
 
 
@@ -8,7 +10,10 @@ const HomePage = () => {
 return (
     
     // <Layout>
-        <Home/>
+    <Layout>
+      <Home/>
+    </Layout>
+        
     // </Layout>
   )
 }

@@ -96,17 +96,17 @@ function Form() {
 
   return (
     //
-    <div className="w-full">
+    <div className="w-full bg-[#262D34] text-white">
       <div className="wrapper flex">
-        <div className="flex w-[22%] h-[100vh] bg-[#847D66] gap-y-8 flex-col items-center justify-center">
+        <div className="flex w-[22%] h-[100vh] bg-[#1E252B] gap-y-8 flex-col items-center justify-center">
           <img src={logo} className="w-[60%] mb-2" alt="" />
           <button
-            className="rounded-md bg-[#E2C598] text-white font-bold p-[16px_18px] w-[50%]"
+            className="rounded-md bg-[#262D34] text-white font-bold p-[16px_18px] w-[50%]"
             onClick={back}>
             Back
           </button>
           <button
-            className="rounded-md bg-white text-[#E2C598] font-bold p-[16px_18px] w-[50%]"
+            className="rounded-md bg-white text-[#262D34] font-bold p-[16px_18px] w-[50%]"
             onClick={changeLawyer}>
             Change Lawyer
           </button>
@@ -169,7 +169,7 @@ function Form() {
                     }}
                     name="fullname"
                     placeholder="Schedule Every Week"
-                    className="border-2 rounded-md p-4 w-full">
+                    className="border-2 rounded-md p-4 w-full text-black">
                     <option value="" disabled selected>
                       Select Day
                     </option>
@@ -188,7 +188,7 @@ function Form() {
                     }}
                     name="schedule"
                     placeholder="Select Hours"
-                    className="border-2 rounded-md p-4 w-full">
+                    className="border-2 rounded-md p-4 w-full text-black">
                     <option value="" disabled selected>
                       Select Hours
                     </option>
@@ -214,7 +214,7 @@ function Form() {
 
             <div className="flex flex-col items-center w-full mt-4">
               <button
-                className="p-[12px_16px] w-[140px] border rounded-md bg-[#b56c55] font-semibold text-lg text-white"
+                className="p-[12px_16px] w-[140px] border rounded-md bg-[#1E252B] font-semibold text-lg text-white"
                 type="submit">
                 Daftar
               </button>

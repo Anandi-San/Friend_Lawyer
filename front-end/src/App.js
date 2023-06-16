@@ -19,6 +19,7 @@ import PartnerListPages from "./pages/Partner/PartnerListPages";
 import ListKonsultasi from './pages/ListKonsultasi/ListKonsultasiPages'
 import AcceptedConsultant from './pages/ListKonsultasi/AcceptedPages'
 import MyMessage from './pages/NotifyUser/NotifyPages'
+import SignUp from './pages/SignUp/SignUpPages'
 
 
 
@@ -47,8 +48,7 @@ function App() {
         <Route path="/form" element={<ListKonsultasi/>}/>
         <Route path="/formaccepted" element={<AcceptedConsultant/>}/>
         <Route path="/notif/:id" element={<MyMessage/>}/>
-
-        
+        <Route path="/register" element={<SignUp/>}/>
 
         {/* <Route path="/Room" element={</>}/> */}
         {/* <Route path="/:discussionId" element={<RoomChat/>}/> */}

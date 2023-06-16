@@ -1,10 +1,13 @@
 import React from "react";
 import ForumList from '../components/forumlist';
+import Layout from "../pages/GlobalLayout"
 
 const ForumPage = () => {
   
     return (
-        <ForumList/>
+        <Layout>
+            <ForumList/>
+        </Layout>
     )
   }
   

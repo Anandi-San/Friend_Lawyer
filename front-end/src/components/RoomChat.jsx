@@ -7,7 +7,7 @@ import axios from "axios";
 function RoomChat() {
   const [pesan, setPesan] = useState("");
   const [messages, setMessages] = useState([]);
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
   const [discussion, setDiscussion] = useState([]);
 
   useEffect(() => {
@@ -23,12 +23,12 @@ function RoomChat() {
     const discussionId = url.split("/").pop();
     try {
       const newMessage = {
-      pesan: pesan,
-      userId: users.userId,
-      discussionId: discussionId,
+        pesan: pesan,
+        userId: users.userId,
+        discussionId: discussionId,
       };
       await axios.post(`http://localhost:5000/message/${discussionId}`, newMessage);
-      setMessages([...messages,newMessage]);
+      setMessages([...messages, newMessage]);
       setPesan("");
     } catch (error) {
       console.error("Error submitting message:", error);
@@ -42,21 +42,19 @@ function RoomChat() {
   const getUsers = async () => {
     const response = await axios.get("http://localhost:5000/users");
     const User = response.data;
-    // console.log(User)
     setUsers(User);
   };
 
   const getDiscussions = async () => {
     const url = window.location.href;
-    const discussionId = url.split("/").pop(); // Mengambil ID diskusi dari URL terakhir
+    const discussionId = url.split("/").pop();
 
     try {
       const response = await axios.get(
         `http://localhost:5000/discussion/${discussionId}`,
       );
-      const { title, content } = response.data; // Ganti dengan nama kolom yang diinginkan
+      const { title, content } = response.data;
       setDiscussion({ title, content, discussionId });
-      // console.log(title, content, discussionId )
     } catch (error) {
       console.error("Error fetching discussion:", error);
     }
@@ -64,13 +62,12 @@ function RoomChat() {
 
   const getMessageByDiscussion = async () => {
     const url = window.location.href;
-    const discussionId = url.split("/").pop(); // Mengambil ID diskusi dari URL terakhir
+    const discussionId = url.split("/").pop();
     try {
       const response = await axios.get(
         `http://localhost:5000/discussionmessage/${discussionId}`,
       );
       setMessages(response.data);
-      // console.log(response.data);
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
@@ -79,7 +76,7 @@ function RoomChat() {
   const startPolling = () => {
     const interval = setInterval(() => {
       getMessageByDiscussion();
-    }, 5000); // Mengambil data pesan setiap 5 detik (atur sesuai kebutuhan Anda)
+    }, 5000);
 
     return () => {
       clearInterval(interval);
@@ -98,101 +95,59 @@ function RoomChat() {
       timeZone: "Asia/Makassar",
     };
 
-    const formattedDate = new Intl.DateTimeFormat("id-ID", options).format(
-      date,
-    );
+    const formattedDate = new Intl.DateTimeFormat("id-ID", options).format(date);
     return formattedDate;
   };
 
   return (
+    <div className="bg-[#1E252B] min-h-screen p-8">
     <div className="container mt-3">
-      <p style={{ textAlign: "center", fontSize: "24px" }}>
-        {discussion.title}
-      </p>
-      <div className="box">
-        <p style={{ textAlign: "justify" }}>{discussion.content}</p>
+    <div className="flex justify-center">
+      <div className="bg-[#262D34] text-white rounded-full p-4 mb-4 " style={{ display: 'inline-block' }}>
+        <p className="text-2xl font-bold">Forum Diskusi</p>
+      </div>
+    </div>
+      <div className=" rounded-lg text-white p-4 mt-4 bg-[#262D34] p-4 ">
+      <p className="text-center text-2xl font-bold">{discussion.title}</p>
+        <p className="text-justify p-5">{discussion.content}</p>
         <p className="mt-3">
-        <span className="is-flex is-align-items-center">
-          <AiFillMessage className="is-size-4 mr-2" />
-          <span className="is-size-5">{messages[0]?.messages?.length}</span>
-          <span className="is-size-5 ml-1">Jawaban</span>
-        </span>
+          <span className="flex items-center">
+            <AiFillMessage className="text-xl mr-2" />
+            <span className="text-lg">{messages[0]?.messages?.length}</span>
+            <span className="text-lg ml-1">Jawaban</span>
+          </span>
         </p>
       </div>
-      <div className="rounded-textarea">
+      <div className="rounded-textarea mt-4 bg-[#262D34] text-white">
         <ReactQuill
-          className="is-rounded"
+          className="rounded h-32 "
           value={pesan}
           onChange={handleChange}
           formats={["bold", "italic", "underline", "link", "list", "bullet"]}
+          style={{ color: "#FFFFFF" }}
         />
       </div>
-      <div className="button-container">
+      <div className="flex flex-col items-end mt-10">
         <button
-          className="button is-info is-pulled-right mt-3 is-rounded is-medium"
+          className="bg-blue-500 text-white rounded-full px-6 py-2 mt-3 text-lg"
           type="submit"
-          onClick={handleSubmit}>
+          onClick={handleSubmit}
+        >
           Kirim
         </button>
-        <hr className="is-underlined" />
+        <hr className="border-t mt-3" />
       </div>
 
-      {/* isi dengan jawaban message dan aturan pesan ya */}
-      <div className="answer-box">
+      <div className="mt-8">
         {messages[0]?.messages?.map((message, index) => (
-          <div key={index} className="answer box">
-            <div className="answer-user">{message.user.name}</div>
-            <div
-              className="answer-message"
-              dangerouslySetInnerHTML={{
-                __html: message.pesan,
-              }}></div>
-            <div className="answer-timestamp">
-              {dateFormatter(message.updatedAt)}
-            </div>
+          <div key={index} className="bg-[#262D34] text-white text-xl rounded-lg p-4 mb-4">
+            <div className="font-bold">{message.user.name}</div>
+            <div className="mb-2" dangerouslySetInnerHTML={{ __html: message.pesan }}></div>
+            <div className="text-sm text-gray-500">{dateFormatter(message.updatedAt)}</div>
           </div>
         ))}
       </div>
-
-      <style>{`
-        .rounded-textarea .ql-editor {
-          min-height: 100px;
-          border-radius: 10px;
-        }
-
-        .is-underlined {
-          border-top: 1px solid #000000;
-          width: 100%;
-          margin-top: 10px;
-        }
-
-        .button-container {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-        }
-
-        .answer-box {
-          margin-top: 20px;
-        }
-
-        .answer {
-          margin-bottom: 10px;
-        }
-
-        .answer-user {
-          font-weight: bold;
-        }
-
-        .answer-message {
-          margin-bottom: 5px;
-        }
-
-        .answer-timestamp {
-          color: #888888;
-          font-size: 12px;
-        }
-      `}</style>
+    </div>
     </div>
   );
 }

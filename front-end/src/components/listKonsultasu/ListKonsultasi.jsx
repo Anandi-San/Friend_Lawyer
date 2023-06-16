@@ -26,8 +26,7 @@ const deleteforms = async (formconsultantId) => {
     if (userRole === 'admin' || userRole === 'Lawyer') {
       await axios.delete(`http://localhost:5000/form/${formconsultantId}`);
       getforms();
-    } else {
-    }
+    } 
   };
 
 

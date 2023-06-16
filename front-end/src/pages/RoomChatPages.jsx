@@ -1,12 +1,11 @@
 import React from "react";
 import RoomChat from "../components/RoomChat";
-// import Layout from './Layout'
-
+import Layout from "../pages/GlobalLayout"
 const RoomChatPages = () => {
   return (
-    // <Layout>
+    <Layout>
       <RoomChat />
-    // </Layout>
+      </Layout>
   );
 }
 
