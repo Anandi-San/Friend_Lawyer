@@ -47,9 +47,9 @@ const Users = db.define(
     },
     specialization: {
       type: DataTypes.TEXT,
+      defaultValue: '',
       allowNull: true,
       validate: {
-        notEmpty: false,
         len: [3, 100],
       },
     },
@@ -57,7 +57,6 @@ const Users = db.define(
       type: DataTypes.TEXT,
       allowNull: true,
       validate: {
-        notEmpty: false,
         len: [3, 100],
       },
     },
@@ -65,7 +64,6 @@ const Users = db.define(
       type: DataTypes.TEXT,
       allowNull: true,
       validate: {
-        notEmpty: false,
         len: [3, 100],
       },
     },
@@ -73,7 +71,6 @@ const Users = db.define(
       type: DataTypes.TEXT,
       allowNull: true,
       validate: {
-        notEmpty: false,
         len: [3, 100],
       },
     },

@@ -10,7 +10,7 @@ import { verifyUser, adminOnly,AdminorpartnersOnly } from "../middleware/AuthUse
 
 const router = express.Router();
 
-router.get('/partners',verifyUser, getPartners);
+router.get('/partners', getPartners);
 router.get('/partners/:id',verifyUser, getPartnersById);
 router.post('/partners',verifyUser,adminOnly, createPartners);
 router.patch('/partners/:id',verifyUser,adminOnly, updatePartners);

@@ -2,41 +2,42 @@ import User from "../models/UserModel.js";
 import argon2 from "argon2";
 
 export const getPartners = async (req, res) => {
-    try {
-      const response = await User.findAll({
-        attributes: ['uuid', 'name', 'email', 'specialization', 'experience', 'education', 'license'],
-        where: {
-            role: "lawyer"
-        }
-      });
-  
-      const users = response.map((user) => {
-        const specializationArray = user.specialization.trim().split(',');
-  
-        const specializationObjects = specializationArray.map((specialization, index) => {
-          return {
-            id: index + 1,
-            role_name: specialization
-          };
-        });
-  
+  try {
+    const response = await User.findAll({
+      attributes: ['uuid', 'name', 'email', 'specialization', 'experience', 'education', 'license'],
+      where: {
+          role: "lawyer"
+      }
+    });
+
+    const users = response.map((user) => {
+      const specializationArray = user.specialization.trim().split(',');
+
+      const specializationObjects = specializationArray.map((specialization, index) => {
         return {
-          uuid: user.uuid,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          specialization: specializationObjects,
-          experience: user.experience,
-          education: user.education,
-          license: user.license
+          id: index + 1,
+          role_name: specialization
         };
       });
-  
-      res.status(200).json(users);
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
-    }
-  };
+
+      return {
+        uuid: user.uuid,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        specialization: specializationObjects,
+        experience: user.experience,
+        education: user.education,
+        license: user.license
+      };
+    });
+
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
   
   
 
@@ -111,37 +112,45 @@ export const getPartners = async (req, res) => {
   
   
 
-export const updatePartners = async(req, res) =>{
+  export const updatePartners = async (req, res) => {
     const user = await User.findOne({
-        where: {
-            uuid: req.params.id
-        }
+      where: {
+        uuid: req.params.id,
+      },
     });
-    if(!user) return res.status(404).json({msg: "User tidak ditemukan"});
-    const {name, email, password, confPassword, role} = req.body;
+    if (!user) return res.status(404).json({ msg: "User tidak ditemukan" });
+    const { name, email, password, confPassword, role, specialization, experience, education, license } = req.body;
     let hashPassword;
-    if(password === "" || password === null){
-        hashPassword = user.password
-    }else{
-        hashPassword = await argon2.hash(password);
+    if (password === "" || password === null) {
+      hashPassword = user.password;
+    } else {
+      hashPassword = await argon2.hash(password);
     }
-    if(password !== confPassword) return res.status(400).json({msg: "Password dan Confirm Password tidak cocok"});
+    if (password !== confPassword) return res.status(400).json({ msg: "Password dan Confirm Password tidak cocok" });
     try {
-        await User.update({
-            name: name,
-            email: email,
-            password: hashPassword,
-            role: role
-        },{
-            where:{
-                id: user.id
-            }
-        });
-        res.status(200).json({msg: "User Updated"});
+      await User.update(
+        {
+          name: name,
+          email: email,
+          password: hashPassword,
+          role: role,
+          specialization: specialization,
+          experience: experience,
+          education: education,
+          license: license,
+        },
+        {
+          where: {
+            uuid: req.params.id,
+          },
+        }
+      );
+      res.status(200).json({ msg: "User Updated" });
     } catch (error) {
-        res.status(400).json({msg: error.message});
+      res.status(400).json({ msg: error.message });
     }
-}
+  };
+  
 
 export const deletePartners = async(req, res) =>{
     const user = await User.findOne({
