@@ -20,6 +20,11 @@ import ListKonsultasi from './pages/ListKonsultasi/ListKonsultasiPages'
 import AcceptedConsultant from './pages/ListKonsultasi/AcceptedPages'
 import MyMessage from './pages/NotifyUser/NotifyPages'
 import SignUp from './pages/SignUp/SignUpPages'
+import ResetPasswordPages from "./pages/ResetPasswordPages/ResetPasswordPages";
+import AddPartnerPages from "./pages/Partner/AddPartnerPages";
+import EditPartnerPages from "./pages/Partner/EditPartnerPages";
+import ProfilPages from "./pages/Profil/ProfilPages";
+import EditProfilPages from "./pages/Profil/EditProfilPages";
 
 
 
@@ -41,14 +46,21 @@ function App() {
         <Route path="/ChatConsultationPage" element={<KonsultasiViaChat/>}/>
         <Route path="/DirectConsultationPage" element={<KonsultasiLangsung/>}/>
         <Route path="/discussion/:id" element={<RoomChat/>}/>
-        <Route path="/users/:id" element={<ProfileLawyerPages/>}/>
+        <Route path="/lawyers/:id" element={<ProfileLawyerPages/>}/>
         <Route path="/message" element={<MessagesList/>}/>
         <Route path="/booking/:userId" element={<FormBookingLawyer/>}/>
         <Route path="/partners" element={<PartnerListPages/>}/>
+        <Route path="/partners/add" element={<AddPartnerPages/>}/>
+        <Route path="/partners/edit/:id" element={<EditPartnerPages/>}/>
         <Route path="/form" element={<ListKonsultasi/>}/>
         <Route path="/formaccepted" element={<AcceptedConsultant/>}/>
         <Route path="/notif/:id" element={<MyMessage/>}/>
         <Route path="/register" element={<SignUp/>}/>
+        <Route path="/resetpassword" element={<ResetPasswordPages/>}/>
+        <Route path="/users/:id" element={<ProfilPages/>}/>
+        <Route path="/profil/edit/:id" element={<EditProfilPages/>}/>
+        
+
 
         {/* <Route path="/Room" element={</>}/> */}
         {/* <Route path="/:discussionId" element={<RoomChat/>}/> */}

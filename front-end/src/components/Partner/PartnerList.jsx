@@ -13,7 +13,7 @@ const Userlist = () => {
     const getPartners = async () => {
         const response = await axios.get("http://localhost:5000/partners");
         setUsers(response.data);
-        // console.log(response.data)
+        console.log(response.data)
     };
 
     const deleteUser = async (userId) => {
@@ -59,7 +59,7 @@ const Userlist = () => {
                 <td>{user.license}</td>
                 <td>
                 <Link
-                  to={`/users/edit/${user.uuid}`}
+                  to={`/partners/edit/${user.uuid}`}
                   className="button is-small is-info"
                 >
                   Edit

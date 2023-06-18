@@ -38,7 +38,7 @@ const KonsultasiLangsung = () => {
                     </React.Fragment>
                   ))}
                 </div>
-                <Link to={`/users/${user.uuid}`}>
+                <Link to={`/lawyers/${user.uuid}`}>
                 <button className='p-2 border rounded-md bg-[#1E252B] font-semibold text-lg text-white mt-2'>Profile Lawyer</button>
                 </Link>
               </div>

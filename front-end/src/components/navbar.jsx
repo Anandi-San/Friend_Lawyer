@@ -17,11 +17,11 @@ const Navbar = () => {
   return (
     <div>
       <nav
-        className="navbar is-fixed-top has-shadow"
+        className="navbar is-fixed-top has-shadow "
         role="navigation"
         aria-label="main navigation"
       >
-        <div className="navbar-brand">
+        <div className="navbar-brand bg-[#171C21]">
           <NavLink to="/dashboard" className="navbar-item">
             <img src={logo} width="112" height="28" alt="logo" />
           </NavLink>
@@ -40,7 +40,7 @@ const Navbar = () => {
           </a>
         </div>
 
-        <div id="navbarBasicExample" className="navbar-menu">
+        <div id="navbarBasicExample" className="navbar-menu bg-[#171C21]">
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">

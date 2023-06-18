@@ -29,6 +29,10 @@ const Login = () => {
       const signUp = () => {
         navigate('/register');
       };
+
+      const ResetPassword = () => {
+        navigate('/resetpassword')
+      }
   return (
     <section className='w-full bg-[#16202A] flex overflow-auto max-h-[100vh] items-center flex-col justify-start'>
         <div className='w-full h-[100vh] flex items-end justify-start'>
@@ -70,10 +74,15 @@ const Login = () => {
                         </div>
                     </div>
                     </form>
+                    <div className='w-[50%] h-auto flex max-w-[50%] self-center my-2'>
+                      <button className='text-2xl font-medium text-white items-center w-full border rounded-full px-4 py-2' onClick={ResetPassword}>
+                        Reset Password
+                      </button>
+                    </div>
                 </div>
             </div>
             <div className='w-[50%] h-full flex self-center items-start justify-center '>
-                <img className="w-[100%] h-full object-cover brightness-[.65]" src={banner}/>
+                <img className="w-[100%] h-full object-cover brightness-[.65]" alt='' src={banner}/>
             </div>
         </div>
     </section>

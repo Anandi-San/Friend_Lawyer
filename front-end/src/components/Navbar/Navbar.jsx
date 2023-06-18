@@ -119,11 +119,19 @@ function Navbar() {
         {isDropdownOpen && (
           <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-lg">
             <a
-              href="#"
+              href={`/users/${user.uuid}`}
               className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
             >
               Profile
             </a>
+            {user.role === 'admin' || user.role === 'Lawyer' ? (
+              <a
+                href="/dashboard"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+              >
+                Dashboard
+              </a>
+            ) : null}
             <a href='' className="block px-4 py-2 text-gray-800 hover:bg-gray-200" onClick={logout}>
               Logout
             </a>
