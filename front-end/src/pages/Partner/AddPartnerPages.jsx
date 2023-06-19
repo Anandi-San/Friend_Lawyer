@@ -1,9 +1,12 @@
 import React from 'react'
 import AddPartner from '../../components/Partner/AddPartner'
+import Layout from "../Layout"
 
 function AddPartnerPages() {
   return (
-    <AddPartner/>
+    <Layout>
+      <AddPartner/>
+    </Layout>
   )
 }
 

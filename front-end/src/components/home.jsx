@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 // import service1 from "../img/service1.png";
 // import step2 from "../img/step2.png"
 import cover1 from "../img/cover1.png"
 import cover2 from "../img/cover2.jpg"
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // import {AiFillMessage} from "react-icons/ai";
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {SiGooglechat} from "react-icons/si";
 import {ImUserPlus} from "react-icons/im"
@@ -29,15 +29,15 @@ const Home = () => {
             {/* <Link to={`/notif/${id}`}>
               <AiFillMessage size={24} />
             </Link> */}
-            <div className="hero-body">
-              <div className="container">
-                <div className="header-content flex items-center ">
-                  <div className="w-3/4 mr-8">
-                    <h1 className="text-white text-5xl font-bold mb-4 ml-2">Mengatasi Tantangan Hukum Anda dengan Bijaksana dan Berpengalaman!</h1>
+            <div className="">
+              <div className="px-6">
+                <div className="header-content w-full flex items-center ">
+                  <div className="mx-10">
+                    <h1 className="text-white text-5xl font-bold mb-4">Mengatasi Tantangan Hukum Anda dengan Bijaksana dan Berpengalaman!</h1>
                     <p className="text-gray-300 text-lg">Memberi Pengetahuan dan Membantu Kesuksesan Anda dalam Menghadapi Hukum, Memberi Kenyamanan Client dan Menjaga Rahasia Client</p>
                   </div>
-                  <div className="w-1/2 flex justify-end">
-                    <img src={cover1} alt="Logo" className="w-11/12" />
+                  <div className="w-full justify-end">
+                    <img src={cover1} alt="Logo" width='900px'  />
                   </div>
                 </div>
               </div>
@@ -51,7 +51,7 @@ const Home = () => {
               <p className="text-white text-2xl ml-20"> Selamat datang di platform kami yang inovatif, tempat di mana Anda dapat berpartisipasi dalam diskusi hukum yang menginspirasi dan mendapatkan konsultasi langsung dari para pengacara ahli.Kami berkomitmen untuk menciptakan komunitas yang saling mendukung, berbagi pengetahuan, dan memberikan solusi hukum yang tepat.</p>
             </div>
             <div className="md:w-1/2 flex items-center justify-center">
-              <img src={cover2} alt="Cover Image" className="w-8/12 mt-20" />
+              <img src={cover2} alt="CoverImage" className="w-8/12 mt-20" />
             </div>
           </div>
 

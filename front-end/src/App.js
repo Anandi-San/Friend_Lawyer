@@ -25,6 +25,7 @@ import AddPartnerPages from "./pages/Partner/AddPartnerPages";
 import EditPartnerPages from "./pages/Partner/EditPartnerPages";
 import ProfilPages from "./pages/Profil/ProfilPages";
 import EditProfilPages from "./pages/Profil/EditProfilPages";
+import AddDiscussionPages from "./pages/AddDiscussion/AddDiscussionPages";
 
 
 
@@ -41,6 +42,7 @@ function App() {
         <Route path="/users/edit/:id" element={<EditUser/>}/>
         <Route path="/discussion" element={<Discussion/>}/>
         <Route path="/discussion/add" element={<AddDiscussion/>}/>
+        <Route path="/add/discussion" element={<AddDiscussionPages/>}/>
         <Route path="/discussion/edit/:id" element={<EditDiscussion/>}/>
         <Route path="/discussionforum" element={<ForumPage/>}/>
         <Route path="/ChatConsultationPage" element={<KonsultasiViaChat/>}/>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function EditProfile() {
   const [name, setName] = useState('');
@@ -26,7 +27,6 @@ function EditProfile() {
         setEducation(education);
         setLicense(license);
         setRole(role);
-        // console.log(name)
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -36,7 +36,7 @@ function EditProfile() {
     getPartnersById();
   }, [id]);
 
-  const updateProfil = async (e) => {
+  const updateProfile = async (e) => {
     e.preventDefault();
     try {
       await axios.patch(`http://localhost:5000/profil/update/${id}`, {
@@ -47,129 +47,137 @@ function EditProfile() {
         education: education,
         license: license,
       });
-      navigate(`/users/${id}`);
+      Swal.fire({
+        icon: 'success',
+        title: 'Update Successful',
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        navigate(`/users/${id}`);
+      });
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);
       }
+      Swal.fire({
+        icon: 'error',
+        title: 'Update Failed',
+        text: 'An error occurred while updating the profile.',
+      });
     }
   };
 
   return (
-    <div>
-      <h1 className="title">PROFILE</h1>
-      <h2 className="subtitle">Edit ProfilE</h2>
-      <div className="card is-shadowless">
-        <div className="card-content">
-          <div className="content">
-            <form onSubmit={updateProfil}>
-              <p className="has-text-center">{msg}</p>
+    <div className="min-h-screen bg-[#262D34] text-white">
+      <h1 className="text-2xl font-bold ml-4">PROFILE</h1>
+      <h2 className="text-xl font-bold ml-4">Edit Profile</h2>
+      <div className="  card bg-[#1E252B]">
+        <div className="bg-[#1E252B]">
+          <div className="content text-white">
+            <form onSubmit={updateProfile}>
+              <p className="text-center">{msg}</p>
               {role === 'Lawyer' ? (
                 <>
-                  <div className="field">
-                    <label className="label">Name</label>
-                    <div className="control">
-                      <input
-                        type="text"
-                        placeholder="Enter Name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="input"
-                      />
-                    </div>
+                  <div className="mb-4">
+                    <label className="block ml-4">Name</label>
+                    <input
+                      type="text"
+                      placeholder="Enter Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className='lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white ml-4'
+                    />
                   </div>
 
-                  <div className="field">
-                    <label className="label">Email</label>
-                    <div className="control">
-                      <input
-                        type="email"
-                        placeholder="Enter Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="input"
-                      />
-                    </div>
+                  <div className="mb-4">
+                    <label className="block ml-4">Email</label>
+                    <input
+                      type="email"
+                      placeholder="Enter Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className='lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white ml-4'
+                    />
                   </div>
 
-
-                  <div className="field">
-                    <label className="label">Specialization (inputkan dengan data1 ,data2 ,data3)</label>
-                    <div className="control">
-                      <input
-                        type="text"
-                        placeholder="Enter Specialization"
-                        value={specialization}
-                        onChange={(e) => setSpecialization(e.target.value)}
-                        className="input"
-                      />
-                    </div>
+                  <div className="mb-4">
+                    <label className="block ml-4">Specialization (inputkan dengan data1, data2, data3)</label>
+                    <input
+                      type="text"
+                      placeholder="Enter Specialization"
+                      value={specialization}
+                      onChange={(e) => setSpecialization(e.target.value)}
+                      className='lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white ml-4'
+                    />
                   </div>
 
-                  <div className="field">
-                    <label className="label">Experience</label>
-                    <div className="control">
-                      <input
-                        type="text"
-                        placeholder="Enter Experience"
-                        value={experience}
-                        onChange={(e) => setExperience(e.target.value)}
-                        className="input"
-                      />
-                    </div>
+                  <div className="mb-4">
+                    <label className="block ml-4">Experience</label>
+                    <input
+                      type="text"
+                      placeholder="Enter Experience"
+                      value={experience}
+                      onChange={(e) => setExperience(e.target.value)}
+                      className='lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white ml-4'
+                    />
                   </div>
 
-                  <div className="field">
-                    <label className="label">Education</label>
-                    <div className="control">
-                      <input
-                        type="text"
-                        placeholder="Enter Education"
-                        value={education}
-                        onChange={(e) => setEducation(e.target.value)}
-                        className="input"
-                      />
-                    </div>
+                  <div className="mb-4">
+                    <label className="block ml-4">Education</label>
+                    <input
+                      type="text"
+                      placeholder="Enter Education"
+                      value={education}
+                      onChange={(e) => setEducation(e.target.value)}
+                      className='lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white ml-4'
+                    />
                   </div>
 
-                  <div className="field">
-                    <label className="label">License</label>
-                    <div className="control">
-                      <input
-                        type="text"
-                        placeholder="Enter License"
-                        value={license}
-                        onChange={(e) => setLicense(e.target.value)}
-                        className="input"
-                      />
-                    </div>
+                  <div className="mb-4">
+                    <label className="block ml-4">License</label>
+                    <input
+                      type="text"
+                      placeholder="Enter License"
+                      value={license}
+                      onChange={(e) => setLicense(e.target.value)}
+                      className='lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white ml-4'
+                    />
                   </div>
                 </>
               ) : (
                 <>
-                 <div className="field">
-                            <label className='label'>Nama</label>
-                            <div className="control">
-                                <input type="text" placeholder='Masukkan Nama' value={name} onChange={(e) => setName(e.target.value)} className='input'/>
-                            </div>
-                        </div>
+                  <div className="mb-4">
+                    <label className="block ml-4">Nama</label>
+                    <input
+                      type="text"
+                      placeholder="Masukkan Nama"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className='lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white ml-4'
+                    />
+                  </div>
 
-                        <div className="field">
-                            <label className='label'>Email</label>
-                            <div className="control">
-                                <input type="text" placeholder='Masukkan Email' value={email} onChange={(e) => setEmail(e.target.value)} className='input'/>
-                            </div>
-                        </div>
+                  <div className="mb-4">
+                    <label className="block ml-4">Email</label>
+                    <input
+                      type="text"
+                      placeholder="Masukkan Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className='lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white ml-4'
+                    />
+                  </div>
                 </>
               )}
 
-              <div className="field">
-                <div className="control">
-                  <button type="submit" className="button is-success">
-                    Update
-                  </button>
-                </div>
-              </div>
+              <div className="flex flex-col w-full mt-4">
+              <button
+                className="p-[12px_16px] w-[140px] border rounded-md bg-[#1E252B] font-semibold text-lg text-white ml-4"
+                type="submit"
+              >
+                Update
+              </button>
+            </div>
             </form>
           </div>
         </div>

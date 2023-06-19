@@ -6,13 +6,9 @@ const layout = ({children}) => {
   return (
     <React.Fragment>
         <Navbar/>
-        <div className="columns mt-6" style={{minHeight:"100vh"}} >
-            <div className="column is-2">
-                <Sidebar/>
-            </div>
-            <div className="column has-background-light">
+        <div className="flex w-full" style={{minHeight:"100vh"}} >
+                <Sidebar width=""/>
                 <main>{children}</main>
-            </div>
         </div>
     </React.Fragment>
   )

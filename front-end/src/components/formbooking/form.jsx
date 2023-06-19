@@ -1,57 +1,54 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import logo from "../../img/Logo.png";
 import "../../style/index.css";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 function Form() {
-  const { userId } = useParams()
-  const [users, setUsers] = useState();
-  const [fullName, setFullName] = useState();
-  const [email, setEmail] = useState();
-  const [phoneNumber, setPhoneNumber] = useState();
-  const [day, setDay] = useState();
-  const [hours, setHours] = useState();
-  const [problem, setProblem] = useState();
-  const [id,setId] = useState()
-  // console.log(id)
+  const { userId } = useParams();
+  const [users, setUsers] = useState([]);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [selectedDay, setSelectedDay] = useState("");
+  const [selectedHour, setSelectedHour] = useState("");
+  const [selectedSlots, setSelectedSlots] = useState([]);
+  const [takenSlots, setTakenSlots] = useState([]);
+  const [problem, setProblem] = useState("");
+  const [konsulForm, setKonsulForm] = useState("")
+  const [id, setId] = useState("");
 
   useEffect(() => {
-    const dataUser = JSON.parse(localStorage.getItem('user'))
-    if(dataUser) {
-      setId(dataUser.id)
+    const dataUser = JSON.parse(localStorage.getItem("user"));
+    if (dataUser) {
+      setId(dataUser.id);
     }
     getPartners();
+    getKonsulForm();
+    getTakenSlots();
   }, []);
 
   const resetForm = () => {
-    setFullName('');
-    setEmail('');
-    setPhoneNumber('');
-    setDay('');
-    setHours('');
-    setProblem('');
+    setFullName("");
+    setEmail("");
+    setPhoneNumber("");
+    setSelectedDay("");
+    setSelectedHour("");
+    setProblem("");
   };
 
-  
   const saveForm = async (e) => {
-    e.preventDefault()
-    // const url = window.location.href;
-    // const userId = url.split("/").pop();
-    // console.log(userId)
+    e.preventDefault();
     const postUrl = `http://localhost:5000/booking/${userId}`;
 
     const requestBody = {
       full_name: fullName,
       email: email,
       phonenumber: phoneNumber,
-      day: day,
-      hours: hours,
+      day: selectedDay,
+      hours: selectedHour,
       problem: problem,
-      // status: status
       clientid: id,
       lawyerId: userId,
     };
@@ -60,10 +57,10 @@ function Form() {
       const response = await axios.post(postUrl, requestBody);
       console.log("Form saved successfully:", response.data);
       Swal.fire({
-        title: 'Success!',
-        text: 'Permintaan anda telah diterima',
-        icon: 'success',
-        confirmButtonText: 'OK'
+        title: "Success!",
+        text: "Permintaan anda telah diterima",
+        icon: "success",
+        confirmButtonText: "OK",
       }).then(() => {
         resetForm();
         window.location.reload();
@@ -71,20 +68,45 @@ function Form() {
     } catch (error) {
       console.error("Error saving form:", error);
       Swal.fire({
-        title: 'Error!',
-        text: 'Error saving form: ' + error.message,
-        icon: 'error',
-        confirmButtonText: 'OK'
+        title: "Error!",
+        text: "Error saving form: " + error.message,
+        icon: "error",
+        confirmButtonText: "OK",
       });
     }
   };
 
+  const getTakenSlots = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/form");
+      const konsulForm = response.data;
+
+      // Collect all taken slots
+      const slots = konsulForm.map((form) => ({
+        day: form.day,
+        hour: form.hours,
+      }));
+
+      setTakenSlots(slots);
+    } catch (error) {
+      console.error("Error getting taken slots:", error);
+    }
+  };
 
   const getPartners = async () => {
-    const response = await axios.get("http://localhost:5000/partners");
-    setUsers(response.data);
-    // console.log(response.data) //uahhh
+    try {
+      const response = await axios.get("http://localhost:5000/partners");
+      setUsers(response.data);
+    } catch (error) {
+      console.error("Error getting partners:", error);
+    }
   };
+
+  const getKonsulForm = async () => {
+    const response = await axios.get("http://localhost:5000/form")
+    setKonsulForm(response.data)
+    // console.log(response.data)
+  }
 
   const back = () => {
     window.history.back();
@@ -94,20 +116,66 @@ function Form() {
     window.location.href = "/DirectConsultationPage";
   };
 
+  const handleHourChange = (e) => {
+    const selectedHour = e.target.value;
+    const selectedSlot = {
+      day: selectedDay,
+      hour: selectedHour,
+    };
+    setSelectedSlots([selectedSlot]);
+    setSelectedHour(selectedHour);
+  };
+
+  const isSlotAvailable = (day, hour) => {
+    return !takenSlots.some((slot) => slot.day === day && slot.hour === hour);
+  };
+
+  const handleDayChange = (e) => {
+    const selectedDay = e.target.value;
+    setSelectedDay(selectedDay);
+    setSelectedHour("");
+  };
+
+  const renderHourOptions = () => {
+    const hours = [
+      "08:00-09:00",
+      "10:00-11:00",
+      "13:00-14:00",
+      "15:00-16:00",
+    ];
+    if (selectedDay === "") {
+      return (
+        <option value="" disabled>
+          Select Hours
+        </option>
+      );
+    }
+    return hours.map((hour, index) => (
+      <option
+        key={index}
+        value={hour}
+        disabled={!isSlotAvailable(selectedDay, hour)}
+      >
+        {hour}
+      </option>
+    ));
+  };
+
   return (
-    //
     <div className="w-full bg-[#262D34] text-white">
       <div className="wrapper flex">
         <div className="flex w-[22%] h-[100vh] bg-[#1E252B] gap-y-8 flex-col items-center justify-center">
           <img src={logo} className="w-[60%] mb-2" alt="" />
           <button
             className="rounded-md bg-[#262D34] text-white font-bold p-[16px_18px] w-[50%]"
-            onClick={back}>
+            onClick={back}
+          >
             Back
           </button>
           <button
             className="rounded-md bg-white text-[#262D34] font-bold p-[16px_18px] w-[50%]"
-            onClick={changeLawyer}>
+            onClick={changeLawyer}
+          >
             Change Lawyer
           </button>
         </div>
@@ -117,7 +185,8 @@ function Form() {
           </h1>
           <form
             className="wrapper_form flex w-full flex-col my-4 items-center"
-            onSubmit={saveForm}>
+            onSubmit={saveForm}
+          >
             <div className="flex mx-2 w-full">
               <div className="flex flex-col gap-y-1 w-[50%] items-center">
                 <h1 className="font-semibold text-lg">Enter Your Biodata</h1>
@@ -130,7 +199,7 @@ function Form() {
                     name="fullname"
                     placeholder="Full Name"
                     type="text"
-                    className="border-2 rounded-md p-4 w-full"
+                    className="text-black border-2 rounded-md p-4 w-full"
                   />
                 </div>
                 <div className="my-2 w-[70%] mx-8">
@@ -142,7 +211,7 @@ function Form() {
                     name="email"
                     type="email"
                     placeholder="Email"
-                    className="border-2 rounded-md p-4 w-full"
+                    className="text-black border-2 rounded-md p-4 w-full"
                   />
                 </div>
                 <div className="my-2 w-[70%] mx-8">
@@ -154,7 +223,7 @@ function Form() {
                     name="phonenumber"
                     type="text"
                     placeholder="Phone Number"
-                    className="border-2 rounded-md p-4 w-full"
+                    className="text-black border-2 rounded-md p-4 w-full"
                   />
                 </div>
               </div>
@@ -164,17 +233,19 @@ function Form() {
                 <div className="my-2 w-[70%] mx-8">
                   <h1 className="text-base mb-2">Schedule Every Week</h1>
                   <select
-                    onChange={(e) => {
-                      setDay(e.target.value);
-                    }}
-                    name="fullname"
+                    onChange={handleDayChange}
+                    value={selectedDay}
+                    name="schedule"
                     placeholder="Schedule Every Week"
-                    className="border-2 rounded-md p-4 w-full text-black">
-                    <option value="" disabled selected>
+                    className={`border-2 rounded-md p-4 w-full ${
+                      selectedDay !== "" ? "text-black" : "text-black"
+                    }`}
+                  >
+                    <option value="" disabled>
                       Select Day
                     </option>
                     <option value="Monday">Monday</option>
-                    <option value="Tuesday">tuesday</option>
+                    <option value="Tuesday">Tuesday</option>
                     <option value="Wednesday">Wednesday</option>
                     <option value="Thursday">Thursday</option>
                     <option value="Friday">Friday</option>
@@ -183,19 +254,16 @@ function Form() {
                 <div className="my-2 w-[70%] mx-8">
                   <h1 className="text-base mb-2">Select Hours</h1>
                   <select
-                    onChange={(e) => {
-                      setHours(e.target.value);
-                    }}
+                    onChange={handleHourChange}
+                    value={selectedHour}
                     name="schedule"
                     placeholder="Select Hours"
-                    className="border-2 rounded-md p-4 w-full text-black">
-                    <option value="" disabled selected>
-                      Select Hours
-                    </option>
-                    <option value="08:00-09:00">08:00 - 09.00</option>
-                    <option value="10:00-11.00">10:00 - 11.00</option>
-                    <option value="13:00-14:00">13:00 - 14:00</option>
-                    <option value="15:00-16:00">15:00 - 16:00</option>
+                    className={`border-2 rounded-md p-4 w-full ${
+                      selectedHour !== "" ? "text-black" : "text-black"
+                    }`}
+                    disabled={selectedDay === ""}
+                  >
+                    {renderHourOptions()}
                   </select>
                 </div>
               </div>
@@ -207,7 +275,7 @@ function Form() {
                   onChange={(e) => {
                     setProblem(e.target.value);
                   }}
-                  className="border-2 rounded-md w-full h-[20vh]"
+                  className="text-black border-2 rounded-md w-full h-[20vh]"
                 />
               </div>
             </div>
@@ -215,7 +283,8 @@ function Form() {
             <div className="flex flex-col items-center w-full mt-4">
               <button
                 className="p-[12px_16px] w-[140px] border rounded-md bg-[#1E252B] font-semibold text-lg text-white"
-                type="submit">
+                type="submit"
+              >
                 Daftar
               </button>
             </div>

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 const Welcome = () => {
   const {user} = useSelector ((state) => state.auth);
   return (
-    <div className='bg-[#1E252B]  min h-screen'>
+    <div className='bg-[#1E252B] h-screen w-screen'>
         <p className='text-4xl text-white'>DashBoard</p>
         <h2 className='text-3xl text-white'> Welcome Back <strong className='text-white'>{user && user.name}</strong></h2>
     </div>

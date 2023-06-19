@@ -1,9 +1,12 @@
 import React from 'react'
-import EditPartners from "../../components/Partner/EditPartners"
+import EditPartners from "../../components/Partner/EditPartners";
+import Layout from "../Layout"
 
 function EditPartnerPages() {
   return (
-    <EditPartners/>
+    <Layout>
+      <EditPartners/>
+    </Layout>
   )
 }
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function Mymessage() {
   const [forms, setForms] = useState([]);
@@ -16,10 +17,14 @@ function Mymessage() {
   }, []);
 
   const getFormsByUserId = async () => {
+    try {
     const response = await axios.get(`http://localhost:5000/notif/${id}`);
     setForms(response.data);
     // console.log(response.data);
-  };
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   const handleCancel = async (formconsultantId) => {
     setIsLoading(true);
@@ -27,11 +32,26 @@ function Mymessage() {
     await axios.patch(`http://localhost:5000/form/${formconsultantId}`, { status: "canceled" });
     setCanceled([...canceled, formconsultantId]);
     // console.log(formconsultantId)
-    }catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false);
-  };
+    Swal.fire({
+      icon: 'success',
+      title: 'Consultation Canceled',
+      showConfirmButton: false,
+      timer: 1500,
+    }).then(() => {
+      getFormsByUserId(); // Refresh the forms list after canceling
+    });
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Failed to cancel consultation.',
+    });
+  }
+  setIsLoading(false);
+};
+
+  // const
 
   return (
     <div className="bg-[#1E252B] min-h-screen p-8">

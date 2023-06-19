@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function AddPartner() {
   const [name, setName] = useState('');
@@ -29,71 +30,94 @@ function AddPartner() {
         education: education,
         license: license
       });
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Partner added successfully!'
+      });
+
       navigate('/partners');
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);
       }
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to add partner. Please try again.'
+      });
     }
   };
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Users</h1>
-      <h2 className="text-xl font-semibold">Add New User</h2>
-      <div className="card shadow-none">
+    <div className='bg-[#1e252b] w-screen h-screen'>
+      <h1 className='text-white text-3xl font-semibold'>Partners</h1>
+      <h2 className='text-white text-xl font-semibold'>Add New Partner</h2>
+      <hr />
+      <div className="card shadow-none" style={{ background: "#1e252b" }}>
         <div className="card-content">
           <div className="content">
             <form onSubmit={addPartner}>
-              <p className="text-center">{msg}</p>
-              <div className="mb-4">
-                <label className="block text-sm font-medium">Nama</label>
+              <p className="has-text-centered">{msg}</p>
+              <div className="field">
+                <label className="label">
+                  <p className='text-white'>Nama</p>
+                </label>
                 <input
                   type="text"
                   placeholder="Masukkan Nama"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="input"
+                  className="lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white"
                 />
               </div>
 
-              <div className="mb-4">
-                <label className="block text-sm font-medium">Email</label>
+              <div className="field">
+                <label className="label">
+                  <p className='text-white'>Email</p>
+                </label>
                 <input
                   type="text"
                   placeholder="Masukkan Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="input"
+                  className="lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white"
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium">Password</label>
+              <div className="field">
+                <label className="label">
+                  <p className='text-white'>Password</p>
+                </label>
                 <input
                   type="password"
                   placeholder="********"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="input"
+                  className="lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white"
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium">Confirm</label>
+              <div className="field">
+                <label className="label">
+                  <p className='text-white'>Confirm</p>
+                </label>
                 <input
                   type="password"
                   placeholder="********"
                   value={confPassword}
                   onChange={(e) => setConfPassword(e.target.value)}
-                  className="input"
+                  className="lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white"
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium">Role</label>
+              <div className="field">
+                <label className="label">
+                  <p className='text-white'>Role</p>
+                </label>
                 <div className="relative">
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className="input"
+                    className="lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600"
                   >
                     <option value="admin">Admin</option>
                     <option value="Lawyer">Lawyer</option>
@@ -117,44 +141,52 @@ function AddPartner() {
                   </div>
                 </div>
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium">Specialization</label>
+              <div className="field">
+                <label className="label">
+                  <p className='text-white'>Specialization</p>
+                </label>
                 <input
                   type="text"
                   placeholder="Specialization"
                   value={specialization}
                   onChange={(e) => setSpecialization(e.target.value)}
-                  className="input"
+                  className="lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white"
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium">Experience</label>
+              <div className="field">
+                <label className="label">
+                  <p className='text-white'>Experience</p>
+                </label>
                 <input
                   type="text"
                   placeholder="Experience"
                   value={experience}
                   onChange={(e) => setExperience(e.target.value)}
-                  className="input"
+                  className="lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white"
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium">Education</label>
+              <div className="field">
+                <label className="label">
+                  <p className='text-white'>Education</p>
+                </label>
                 <input
                   type="text"
                   placeholder="Education"
                   value={education}
                   onChange={(e) => setEducation(e.target.value)}
-                  className="input"
+                  className="lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white"
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium">License</label>
+              <div className="field">
+                <label className="label">
+                  <p className='text-white'>License</p>
+                </label>
                 <input
                   type="text"
                   placeholder="License"
                   value={license}
                   onChange={(e) => setLicense(e.target.value)}
-                  className="input"
+                  className="lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white"
                 />
               </div>
               <div className="mb-4">
