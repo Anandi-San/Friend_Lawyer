@@ -11,11 +11,11 @@ import { verifyUser, adminOnly,AdminorpartnersOnly } from "../middleware/AuthUse
 
 const router = express.Router();
 
-router.get('/form',verifyUser,AdminorpartnersOnly, getKonsulForm);
+router.get('/form',verifyUser, getKonsulForm);
 router.get('/form/:id',verifyUser,AdminorpartnersOnly, getKonsulFormById);
 router.get('/notif/:userId', verifyUser, getnotifByUserId);
 router.post('/booking/:userId',verifyUser, createKonsulForm);
-router.patch('/form/:id',verifyUser,AdminorpartnersOnly, updateKonsulForm);
+router.patch('/form/:id',verifyUser, updateKonsulForm);
 router.delete('/form/:id',verifyUser,AdminorpartnersOnly, deleteKonsulForm);
 
 export default router;

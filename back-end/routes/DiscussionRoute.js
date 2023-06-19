@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get('/discussion',verifyUser, getDiscussion);
 router.get('/discussion/:id',verifyUser, getDiscussionById);
-router.post('/discussion',verifyUser,adminOnly, createDiscussion);
+router.post('/discussion',verifyUser, createDiscussion);
 router.patch('/discussion/:id',verifyUser, updateDiscussion);
 router.delete('/discussion/:id',verifyUser, deleteDiscussion);
 

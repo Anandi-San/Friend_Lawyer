@@ -38,7 +38,7 @@ export const getKonsulForm = async (req, res) => {
 
 export const getnotifByUserId = async (req, res) => {
   const { userId } = req.params;
-  console.log(userId);
+  // console.log(userId);
 
   try {
     const response = await FormConsultant.findAll({
@@ -188,55 +188,31 @@ export const updateKonsulForm = async (req, res) => {
       status,
     } = req.body;
 
-    if (req.role === "admin") {
-      await FormConsultant.update(
-        {
-          full_name,
-          email,
-          phonenumber,
-          day,
-          hours,
-          problem,
-          clientid,
-          lawyerid,
-          status,
+    await FormConsultant.update(
+      {
+        full_name,
+        email,
+        phonenumber,
+        day,
+        hours,
+        problem,
+        clientid,
+        lawyerid,
+        status,
+      },
+      {
+        where: {
+          uuid: req.params.id,
         },
-        {
-          where: {
-            uuid: req.params.id,
-          },
-        }
-      );
-    } else {
-      if (req.userId !== formconsultant.lawyerid)
-        return res.status(403).json({ msg: "Unauthorized access" });
-
-      await FormConsultant.update(
-        {
-          full_name,
-          email,
-          phonenumber,
-          day,
-          hours,
-          problem,
-          clientid,
-          lawyerid,
-          status,
-        },
-        {
-          where: {
-            uuid: req.params.id,
-            lawyerid: req.userId,
-          },
-        }
-      );
-    }
+      }
+    );
 
     res.status(200).json({ msg: "Form updated successfully" });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
 };
+
 
 export const deleteKonsulForm = async (req, res) => {
   try {
