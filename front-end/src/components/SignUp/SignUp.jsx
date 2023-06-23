@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import banner from '../../img/lawyer_login.jpg'
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import Swal from "sweetalert2";
 
 function SignUp() {
     const [username, setUsername] = useState("")
@@ -20,13 +21,23 @@ function SignUp() {
             password: password,
             confPassword: confpassword,
         });
-         navigate("/homepage");
+        Swal.fire({
+            icon: "success",
+            title: "Registration Successful",
+            text: "You have successfully registered. please sign in",
+          }).then(() => {
+            navigate("/");
+          });
         } catch (error) {
-        if(error.response){
-      setMsg(error.response.data.msg);
-         }   
+          if (error.response) {
+            Swal.fire({
+              icon: "error",
+              title: "Registration Failed",
+              text: error.response.data.msg,
+            });
+          }
         }
-    }
+      };
 
     const signIn = () => {
         navigate('/')

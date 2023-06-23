@@ -78,8 +78,9 @@ function Form() {
 
   const getTakenSlots = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/form");
+      const response = await axios.get(`http://localhost:5000/booking/${userId}`);
       const konsulForm = response.data;
+      console.log(response.data)
 
       // Collect all taken slots
       const slots = konsulForm.map((form) => ({

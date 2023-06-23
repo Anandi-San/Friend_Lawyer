@@ -55,7 +55,12 @@ const AddDiscussion = () => {
                         <div className="field mt-5">
                             <label className='text-white ml-4'>Content</label>
                             <div className="control">
-                                <input type="text" placeholder='Masukkan Content' className='lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white ml-4' value={content} onChange={(e) => setContent(e.target.value)}/>
+                            <textarea
+                                placeholder="Masukkan Content"
+                                className="lg:w-[50%] sm:w-[40%] px-2 py-3 rounded-md bg-transparent border border-neutral-600 text-white ml-4 resize-y h-40"
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
+                              />
                             </div>
                         </div>
                         <div className="flex flex-col w-full mt-4">

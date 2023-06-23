@@ -50,7 +50,7 @@ const Login = () => {
                     </div>
                     
                     <form onSubmit={Auth} className='gap-4 w-[50%] h-auto flex max-w-[50%] self-center my-4 flex-col'>
-                    { isError && <p className='has-text-centered'>{message}</p> }
+                    { isError && <p className='has-text-centered text-white text-2xl'>{message}</p> }
 
                     <hr className="border-b"/>
                       

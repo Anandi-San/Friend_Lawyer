@@ -53,14 +53,14 @@ const Sidebar = ( { width } ) => {
           <li>
           <NavLink to={"/form"}>
           <div className='flex gap-2 items-center text-lg p-1 mx-1'>
-              <AiOutlineForm /> ListConsul
+              <AiOutlineForm /> All Consultations
           </div>
             </NavLink>
           </li>
           <li>
           <NavLink to={"/formaccepted"}>
           <div className='flex gap-2 items-center text-lg p-1 mx-1'>
-              <AiOutlineCheck /> Accepted
+              <AiOutlineCheck /> Status Consultations
           </div>
             </NavLink>
           </li>

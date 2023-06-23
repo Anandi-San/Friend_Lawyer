@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import banner from "../../img/lawyer_login.jpg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function ResetPassword() {
   const [ setUsers] = useState("")
@@ -33,9 +34,19 @@ function ResetPassword() {
         newPassword: newPassword,
         confPassword: confPassword,
       });
-      setMsg(response.data.msg);
+      Swal.fire({
+        icon: "success",
+        title: "Password Reset Successful",
+        text: response.data.msg,
+      }).then(() => {
+        navigate("/");
+      });
     } catch (error) {
-      setMsg(error.response.data.msg);
+      Swal.fire({
+        icon: "error",
+        title: "Password Reset Failed",
+        text: error.response.data.msg,
+      });
     }
   };
 

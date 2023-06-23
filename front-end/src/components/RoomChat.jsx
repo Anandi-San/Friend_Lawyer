@@ -28,12 +28,13 @@ function RoomChat() {
         discussionId: discussionId,
       };
       await axios.post(`http://localhost:5000/message/${discussionId}`, newMessage);
-      setMessages([...messages, newMessage]);
+      setMessages([newMessage, ...messages]); // Memperbarui posisi pesan baru pada awal array
       setPesan("");
     } catch (error) {
       console.error("Error submitting message:", error);
     }
   };
+  
 
   const handleChange = (value) => {
     setPesan(value);
@@ -67,7 +68,8 @@ function RoomChat() {
       const response = await axios.get(
         `http://localhost:5000/discussionmessage/${discussionId}`,
       );
-      setMessages(response.data);
+      setMessages(response.data.reverse());
+      // console.log(response.data.reverse())
     } catch (error) {
       console.error("Error fetching messages:", error);
     }
@@ -139,7 +141,7 @@ function RoomChat() {
       </div>
 
       <div className="mt-8">
-        {messages[0]?.messages?.map((message, index) => (
+        {messages[0]?.messages?.reverse().map((message, index) => (
           <div key={index} className="bg-[#262D34] text-white text-xl rounded-lg p-4 mb-4">
             <div className="font-bold">{message.user.name}</div>
             <div className="mb-2" dangerouslySetInnerHTML={{ __html: message.pesan }}></div>

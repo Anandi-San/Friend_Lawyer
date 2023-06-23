@@ -78,7 +78,7 @@ function Accepted() {
                 </thead>
                 <tbody>
                     {forms.map((formconsultant, index) => {
-                        if (formconsultant.status === 'accepted' || formconsultant.status === 'rejected') {
+                        if (formconsultant.status === 'accepted' || formconsultant.status === 'rejected' || formconsultant.status === 'canceled') {
                             return (
                                 <tr className='bg-[#1e252b] text-white' key={formconsultant.uuid}>
                                     <td className='bg-[#1e252b] text-white'>{index + 1}</td>
