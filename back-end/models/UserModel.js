@@ -49,9 +49,6 @@ const Users = db.define(
       type: DataTypes.TEXT,
       defaultValue: '',
       allowNull: true,
-      validate: {
-        len: [3, 100],
-      },
     },
     experience: {
       type: DataTypes.TEXT,

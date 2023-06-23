@@ -3,6 +3,7 @@ import {
     getKonsulForm,
     getKonsulFormById,
     getnotifByUserId,
+    getKonsulFormByLawyerId,
     createKonsulForm,
     updateKonsulForm,
     deleteKonsulForm,
@@ -12,8 +13,9 @@ import { verifyUser, adminOnly,AdminorpartnersOnly } from "../middleware/AuthUse
 const router = express.Router();
 
 router.get('/form',verifyUser, getKonsulForm);
-router.get('/form/:id',verifyUser,AdminorpartnersOnly, getKonsulFormById);
+router.get('/form/:id',verifyUser, getKonsulFormById);
 router.get('/notif/:userId', verifyUser, getnotifByUserId);
+router.get('/booking/:userId', verifyUser, getKonsulFormByLawyerId);
 router.post('/booking/:userId',verifyUser, createKonsulForm);
 router.patch('/form/:id',verifyUser, updateKonsulForm);
 router.delete('/form/:id',verifyUser,AdminorpartnersOnly, deleteKonsulForm);

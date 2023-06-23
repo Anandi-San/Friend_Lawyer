@@ -64,30 +64,6 @@ export const getnotifByUserId = async (req, res) => {
   }
 };
 
-//   try {
-//     const response = await FormConsultant.findAll({
-//       attributes: [
-//         "uuid",
-//         "day",
-//         "hours",
-//         "problem",
-//         "status",
-//         "lawyerid",
-//       ],
-//       include: [
-//         {
-//           model: Users,
-//           as: "lawyer",
-//           attributes: ["name"],
-//         },
-//       ],
-//     });
-//     res.status(200).json(response);
-//   } catch (error) {
-//     res.status(500).json({ msg: error.message });
-//   }
-// };
-
 export const getKonsulFormById = async (req, res) => {
   const { id } = req.params;
 
@@ -127,6 +103,45 @@ export const getKonsulFormById = async (req, res) => {
   }
 };
 
+export const getKonsulFormByLawyerId = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const response = await FormConsultant.findAll({
+      attributes: [
+        "uuid",
+        "full_name",
+        "email",
+        "phonenumber",
+        "day",
+        "hours",
+        "problem",
+        "status",
+        "clientid",
+        "lawyerid",
+      ],
+      include: [
+        {
+          model: Users,
+          as: "client",
+          attributes: ["name"],
+        },
+        {
+          model: Users,
+          as: "lawyer",
+          attributes: ["id", "name", "uuid"],
+          where: { uuid: userId },
+        },
+      ],
+    });
+
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+ 
 export const createKonsulForm = async (req, res) => {
   try {
     const {
